@@ -15,11 +15,11 @@ const NavbarMain = () => {
         
         {/* Desktop Navigation */}
         <ul className="hidden md:flex items-center gap-6">
-          <li className="font-semibold tracking-wider hover:text-primary transition-all cursor-pointer">ფეხბურთი</li>
-          <li className="font-semibold tracking-wider hover:text-primary transition-all cursor-pointer">კალათბურთი</li>
-          <li className="font-semibold tracking-wider hover:text-primary transition-all cursor-pointer">ჩოგბურთი</li>
-          <li className="font-semibold tracking-wider hover:text-primary transition-all cursor-pointer">MMA</li>
-          <li className="font-semibold tracking-wider hover:text-primary transition-all cursor-pointer">ფორმულა 1</li>
+          <li className="font-semibold text-primary tracking-wider hover:text-secondary transition-all cursor-pointer">ფეხბურთი</li>
+          <li className="font-semibold text-primary tracking-wider hover:text-secondary transition-all cursor-pointer">კალათბურთი</li>
+          <li className="font-semibold text-primary tracking-wider hover:text-secondary transition-all cursor-pointer">ჩოგბურთი</li>
+          <li className="font-semibold text-primary tracking-wider hover:text-secondary transition-all cursor-pointer">MMA</li>
+          <li className="font-semibold text-primary tracking-wider hover:text-secondary transition-all cursor-pointer">ფორმულა 1</li>
         </ul>
         
         {/* Mobile Menu Button */}
