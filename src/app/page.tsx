@@ -14,18 +14,23 @@ import f1_BG_BIG from "@/assets/f1-Bg-Big.png";
 import Image from "next/image";
 import QASection from "@/features/landing/QASection";
 import Footer from "@/features/footer/Footer";
+import NewsContainer from "@/features/landing/NewsContainer";
+import HistoryContainer from "@/features/landing/HistoryContainer";
+import SocialConnect from "@/features/landing/FollowOnSocial";
+import { PlayIcon } from "lucide-react";
 
 const getFontGeo = localFont({
   src: "../../public/fonts/font_geo.ttf",
 });
 
-
 const Page = () => {
   return (
-    <main className={`w-full min-h-screen bg-white ${getFontGeo.className}`}>
+    <main
+      className={`w-full min-h-screen bg-[#D9D9D9] ${getFontGeo.className}`}
+    >
       <NavbarMain />
       <HeroMain />
-      <section className="px-4 sm:px-8 md:px-14 lg:px-44 py-10 transition-all duration-300">
+      <section className="px-4 sm:px-8 md:px-14 lg:px-44 transition-all duration-300">
         {/* News Section */}
         <div className="mb-16">
           <Title title="ახალი ამბები" />
@@ -35,6 +40,7 @@ const Page = () => {
             ))}
           </div>
         </div>
+
 
         {/* History Section */}
         <div className="mb-16">

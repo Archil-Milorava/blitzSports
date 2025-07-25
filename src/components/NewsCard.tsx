@@ -12,50 +12,54 @@ interface NewsCardProps {
 
 const NewsCard = ({ news }: NewsCardProps) => {
   const { category, content, image_url, published, title } = news;
-  
-  // Format the date nicely
-  const formattedDate = new Date(published).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric'
+
+  const formattedDate = new Date(published).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
   });
 
   return (
-    <article className="group relative bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col">
-      {/* Image with hover effect */}
-      <div className="relative w-full h-48 md:h-56 overflow-hidden">
+    <article className="group relative bg-[#FFFCF1] rounded-sm overflow-hidden shadow-xs hover:shadow-sm transition-all duration-300 h-full flex flex-col transform hover:-translate-y-1 cursor-pointer">
+      {/* Image with gradient overlay */}
+      <div className="relative w-full aspect-video overflow-hidden">
         <img
-          src={image_url || 'https://via.placeholder.com/400x300?text=News+Image'}
+          src={
+            image_url || "https://via.placeholder.com/800x450?text=Sports+News"
+          }
           alt={title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           loading="lazy"
         />
-        {/* Category badge */}
-        <span className="absolute top-3 left-3 bg-primary text-white text-xs px-2 py-1 rounded-full shadow-sm">
-          {category}
-        </span>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
+
+        {/* Floating category chip */}
+        <div className="absolute top-4 left-4">
+          <span className="inline-flex items-center px-3 py-1 rounded-full tracking-wide text-xs font-bold bg-white/90 backdrop-blur-sm text-accent">
+            {category}
+          </span>
+        </div>
       </div>
 
       {/* Content section */}
-      <div className="p-4 flex flex-col flex-grow">
-        <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-2 line-clamp-2">
+      <div className="p-5 flex flex-col flex-grow">
+        {/* Date above title */}
+        <span className="text-xs font-medium text-gray-500 mb-1.5">
+          {formattedDate}
+        </span>
+
+        <h2 className="text-xl font-bold text-gray-900 mb-2.5 line-clamp-2 leading-tight">
           {title}
         </h2>
-        
-        {/* Divider */}
-        <div className="w-12 h-0.5 bg-primary my-2"></div>
-        
-        {/* Footer with date and read more */}
-        <div className="mt-auto flex items-center justify-between">
-          <span className="text-xs text-gray-500">{formattedDate}</span>
-          <button className="text-primary hover:text-primary-dark text-sm font-medium flex items-center">
-            Read more
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
+
+        {/* Content excerpt with fade effect */}
+        <div className="relative mb-4">
+          <p className="text-gray-600 text-sm line-clamp-2">{content}</p>
         </div>
       </div>
+
+      {/* Hover state indicator */}
+      <div className="absolute inset-x-0 bottom-0 h-1 bg-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
     </article>
   );
 };
