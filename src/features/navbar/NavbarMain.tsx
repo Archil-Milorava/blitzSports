@@ -26,13 +26,13 @@ const NavbarMain = () => {
             კალათბურთი
           </li>
           <li className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer">
-            ჩოგბურთი
-          </li>
-          <li className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer">
             MMA
           </li>
           <li className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer">
             ფორმულა 1
+          </li>
+          <li className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer">
+            სხვა...
           </li>
         </ul>
 
@@ -80,13 +80,13 @@ const NavbarMain = () => {
               კალათბურთი
             </li>
             <li className="font-semibold text-white text-sm tracking-widest hover:text-primary transition-all cursor-pointer w-full text-center py-1">
-              ჩოგბურთი
-            </li>
-            <li className="font-semibold text-white text-sm tracking-widest hover:text-primary transition-all cursor-pointer w-full text-center py-1">
               MMA
             </li>
             <li className="font-semibold text-white text-sm tracking-widest hover:text-primary transition-all cursor-pointer w-full text-center py-1">
               ფორმულა 1
+            </li>
+            <li className="font-semibold text-white text-sm tracking-widest hover:text-primary transition-all cursor-pointer w-full text-center py-1">
+              სხვა..
             </li>
           </ul>
         </div>
