@@ -5,19 +5,15 @@ import NavbarMain from "@/features/navbar/NavbarMain";
 
 import localFont from "next/font/local";
 
-import data from "./dummy.json";
-import data2 from "./dummy2.json";
-import HistoryCard from "@/components/HistoryCard";
 import MMa_BG_BIG from "@/assets/MMa-Bg-Big.png";
 import f1_BG_BIG from "@/assets/f1-Bg-Big.png";
+import HistoryCard from "@/components/HistoryCard";
+import data from "./dummy.json";
+import data2 from "./dummy2.json";
 
-import Image from "next/image";
-import QASection from "@/features/landing/QASection";
 import Footer from "@/features/footer/Footer";
-import NewsContainer from "@/features/landing/NewsContainer";
-import HistoryContainer from "@/features/landing/HistoryContainer";
-import SocialConnect from "@/features/landing/FollowOnSocial";
-import { PlayIcon } from "lucide-react";
+import QASection from "@/features/landing/QASection";
+import Image from "next/image";
 
 const getFontGeo = localFont({
   src: "../../public/fonts/font_geo.ttf",
@@ -40,7 +36,6 @@ const Page = () => {
             ))}
           </div>
         </div>
-
 
         {/* History Section */}
         <div className="mb-16">
