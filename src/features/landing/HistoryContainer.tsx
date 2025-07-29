@@ -1,38 +1,39 @@
-import React from 'react';
+import React from "react";
+
+const stories = [
+  {
+    title: "გიორგი მიქაუტაძე: პარიზის დიდი გეგმები",
+    excerpt:
+      "ფრანგული გიგანტი მიქაუტაძეს 35 მილიონ ევროდ აფასებს. როგორ შეიცვლის ეს ქართული ფეხბურთის ისტორიას?",
+    category: "Exclusive",
+    image:
+      "https://cdn.ge.betsson.sport/1cd01a4c-1640-4941-ad10-451ee9fa2b36.jpg",
+    url: "#",
+    published: "2023-08-15T14:30:00Z",
+  },
+  {
+    title: "ხვიჩას ახალი ერა ნაპოლისში",
+    excerpt:
+      "კვარაცხელიამ კონტრაქტი გაახანგრძლივა - რას ელოდება ქართველი ვარსკვლავი იტალიაში?",
+    category: "Feature",
+    image:
+      "https://cdn.ge.betsson.sport/fd8b02b9-0103-4927-89c0-6b864f391d7a.jpg",
+    url: "#",
+    published: "2023-08-14T18:45:00Z",
+  },
+  {
+    title: "დინამოს ევროპული ამბიციები",
+    excerpt:
+      "3 ახალი ტრანსფერი და ევროპის ლიგის სიზმარი - როგორ ემზადება თბილისის გიგანტი?",
+    category: "Analysis",
+    image:
+      "https://cdn.ge.betsson.sport/f4562cb4-8138-4e09-974d-d7ca642774e3.jpg",
+    url: "#",
+    published: "2023-08-16T09:15:00Z",
+  },
+];
 
 const HeroStories = () => {
-  const stories = [
-    {
-      title: "გიორგი მიქაუტაძე: პარიზის დიდი გეგმები",
-      excerpt: "ფრანგული გიგანტი მიქაუტაძეს 35 მილიონ ევროდ აფასებს. როგორ შეიცვლის ეს ქართული ფეხბურთის ისტორიას?",
-      category: "Exclusive",
-      image: "https://cdn.ge.betsson.sport/1cd01a4c-1640-4941-ad10-451ee9fa2b36.jpg",
-      url: "#",
-      published: "2023-08-15T14:30:00Z"
-    },
-    {
-      title: "ხვიჩას ახალი ერა ნაპოლისში",
-      excerpt: "კვარაცხელიამ კონტრაქტი გაახანგრძლივა - რას ელოდება ქართველი ვარსკვლავი იტალიაში?",
-      category: "Feature",
-      image: "https://cdn.ge.betsson.sport/fd8b02b9-0103-4927-89c0-6b864f391d7a.jpg",
-      url: "#",
-      published: "2023-08-14T18:45:00Z"
-    },
-    {
-      title: "დინამოს ევროპული ამბიციები",
-      excerpt: "3 ახალი ტრანსფერი და ევროპის ლიგის სიზმარი - როგორ ემზადება თბილისის გიგანტი?",
-      category: "Analysis",
-      image: "https://cdn.ge.betsson.sport/f4562cb4-8138-4e09-974d-d7ca642774e3.jpg",
-      url: "#",
-      published: "2023-08-16T09:15:00Z"
-    }
-  ];
-
-  const formatDate = (dateString) => {
-    const options = { day: 'numeric', month: 'long', year: 'numeric' };
-    return new Date(dateString).toLocaleDateString('ka-GE', options);
-  };
-
   return (
     <section className="bg-gray-50 py-12 md:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -45,7 +46,7 @@ const HeroStories = () => {
 
         <div className="space-y-8 md:space-y-12">
           {stories.map((story, index) => (
-            <div 
+            <div
               key={index}
               className="group relative overflow-hidden rounded-lg shadow-xl md:min-h-[300px]"
             >
@@ -69,7 +70,7 @@ const HeroStories = () => {
                   </p>
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-gray-300">
-                      {formatDate(story.published)}
+                      {story.published}
                     </span>
                     <a
                       href={story.url}
@@ -116,7 +117,7 @@ const HeroStories = () => {
                     {story.excerpt}
                   </p>
                   <div className="flex items-center justify-between text-xs text-gray-500">
-                    <span>{formatDate(story.published)}</span>
+                    <span>{story.published}</span>
                     <a href={story.url} className="text-blue-600 font-medium">
                       სრულად
                     </a>

@@ -4,13 +4,13 @@ import { useState } from 'react';
 
 import allNews from "../dummy.json"
 
-interface NewsItem {
-  title: string;
-  content: string;
-  published: string;
-  category: string;
-  image_url: string;
-}
+// interface NewsItem {
+//   title: string;
+//   content: string;
+//   published: string;
+//   category: string;
+//   image_url: string;
+// }
 
 const FootballPage = () => {
  
