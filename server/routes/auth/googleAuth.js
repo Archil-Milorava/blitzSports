@@ -32,7 +32,14 @@ async function googleAuth(req, res) {
       });
     }
 
-    res.json(user);
+    res.status(200).json({
+      id: user._id,
+      avatar: user.avatar,
+      createdAt: user.createdAt,
+      fullName: user.fullName,
+      nickName: user.nickName,
+      roles: user.roles,
+    });
   } catch (err) {
     console.error(err);
     res.status(401).json({ message: "Invalid token" });

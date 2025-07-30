@@ -19,9 +19,6 @@ const ArticleSchema = new Schema(
       ref: "User",
       required: true,
     },
-    publishedAt: {
-      type: Date,
-    },
   },
   { timestamps: true }
 );

@@ -5,7 +5,6 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import type { CredentialResponse } from "@react-oauth/google";
 
-
 const Page = () => {
   const router = useRouter();
 
