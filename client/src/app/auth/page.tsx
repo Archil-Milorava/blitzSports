@@ -3,11 +3,13 @@ import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import type { CredentialResponse } from "@react-oauth/google";
+
 
 const Page = () => {
   const router = useRouter();
 
-  const handleSuccess = async (response: any) => {
+  const handleSuccess = async (response: CredentialResponse) => {
     const token = response.credential;
 
     try {
