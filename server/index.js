@@ -1,0 +1,31 @@
+import "dotenv/config";
+import express from "express";
+import cors from "cors";
+import { connectDB } from "./config/connectDB.js";
+
+import googleAuthRoute from "./routes/auth/googleAuth.js";
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    credentials: true,
+  })
+);
+
+app.use(express.json());
+
+app.use("/api/v1/auth", googleAuthRoute);
+
+app.use((req, res) => {
+  res.status(400).json({
+    message: `Bad Request: Cannot ${req.method} ${req.originalUrl}`,
+  });
+});
+
+app.listen(PORT, async () => {
+  await connectDB();
+  console.log(`Server running on ${PORT}`);
+});
