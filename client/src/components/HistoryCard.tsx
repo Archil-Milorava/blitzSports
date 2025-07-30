@@ -1,19 +1,12 @@
-export interface NewsItem {
-  title: string;
-  content: string;
-  published: string;
-  category: string;
-  image_url: string;
-}
-
 interface NewsCardProps {
-  history: NewsItem;
+  history: HistoryItem;
 }
 
 const HistoryCard = ({ history }: NewsCardProps) => {
-  const { category, content, image_url, published, title } = history;
+  const { category, content, author, title, createdAt, badge, id, imageUrl } =
+    history;
 
-  const formattedDate = new Date(published).toLocaleDateString("en-US", {
+  const formattedDate = new Date(createdAt).toLocaleDateString("en-US", {
     year: "2-digit",
     month: "2-digit",
     day: "2-digit",
@@ -24,7 +17,7 @@ const HistoryCard = ({ history }: NewsCardProps) => {
       {/* Image Section */}
       <div className="relative w-full md:w-2/5 h-48 md:h-full overflow-hidden">
         <img
-          src={image_url || "https://via.placeholder.com/300x200?text=No+Image"}
+          src={imageUrl || "https://via.placeholder.com/300x200?text=No+Image"}
           alt={title}
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
           loading="lazy"
@@ -48,10 +41,10 @@ const HistoryCard = ({ history }: NewsCardProps) => {
         </div>
 
         <div className="flex items-center justify-between border-t border-gray-100 pt-3">
-          <time dateTime={published} className="text-xs text-gray-500 font-medium">
+          <div className="text-xs text-gray-500 font-medium">
             {formattedDate}
-          </time>
-          <button 
+          </div>
+          <button
             className="text-primary hover:text-primary-dark text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/50 rounded px-2 py-1 transition-colors"
             aria-label={`Read more about ${title}`}
           >

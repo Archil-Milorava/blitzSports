@@ -1,4 +1,3 @@
-import NewsCard from "@/components/NewsCard";
 import Title from "@/components/Title";
 import HeroMain from "@/features/hero/HeroMain";
 import NavbarMain from "@/features/navbar/NavbarMain";
@@ -8,19 +7,44 @@ import localFont from "next/font/local";
 import MMa_BG_BIG from "@/assets/MMa-Bg-Big.png";
 import f1_BG_BIG from "@/assets/f1-Bg-Big.png";
 import HistoryCard from "@/components/HistoryCard";
-import data from "./dummy.json";
-import data2 from "./dummy2.json";
 
 import Footer from "@/features/footer/Footer";
 import QASection from "@/features/landing/QASection";
 import Image from "next/image";
-import { GoogleOAuthProvider } from "@react-oauth/google";
+import NewsCard from "@/components/NewsCard";
 
 const getFontGeo = localFont({
   src: "../../public/fonts/font_geo.ttf",
 });
 
-const Page = () => {
+const getApiBaseUrl = () => {
+  if (process.env.NEXT_ENV === "production") {
+    return process.env.NEXT_PUBLIC_API_URL;
+  }
+  return "http://localhost:8000";
+};
+
+const Page = async () => {
+  const API_BASE_URL = getApiBaseUrl();
+
+  let news: NewsItem[] = [];
+  let histories: HistoryItem[] = [];
+
+  try {
+    const [newsResponse, historiesResponse] = await Promise.all([
+      fetch(`${API_BASE_URL}/api/v1/article/landing/news`),
+      fetch(`${API_BASE_URL}/api/v1/article/landing/histories`),
+    ]);
+
+    if (!newsResponse.ok) throw new Error("Failed to fetch news");
+    if (!historiesResponse.ok) throw new Error("Failed to fetch histories");
+
+    news = await newsResponse.json();
+    histories = await historiesResponse.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+
   return (
     <main
       className={`w-full min-h-screen bg-[#D9D9D9] ${getFontGeo.className}`}
@@ -32,8 +56,8 @@ const Page = () => {
         <div className="mb-16">
           <Title title="ახალი ამბები" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 my-8">
-            {data.map((news) => (
-              <NewsCard news={news} key={news.title} />
+            {news.map((news) => (
+              <NewsCard news={news} key={news._id} />
             ))}
           </div>
         </div>
@@ -42,8 +66,8 @@ const Page = () => {
         <div className="mb-16">
           <Title title="ისტორიები" />
           <div className="flex flex-col gap-8 my-8">
-            {data2.map((history) => (
-              <HistoryCard history={history} key={history.title} />
+            {histories.map((history) => (
+              <HistoryCard history={history} key={history._id} />
             ))}
           </div>
         </div>

@@ -1,19 +1,12 @@
-export interface NewsItem {
-  title: string;
-  content: string;
-  published: string;
-  category: string;
-  image_url: string;
-}
-
 interface NewsCardProps {
   news: NewsItem;
 }
 
 const NewsCard = ({ news }: NewsCardProps) => {
-  const { category, content, image_url, published, title } = news;
+  const { category, content, author, title, badge, createdAt, _id, imageUrl } =
+    news;
 
-  const formattedDate = new Date(published).toLocaleDateString("en-US", {
+  const formattedDate = new Date(createdAt).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
     day: "numeric",
@@ -25,7 +18,7 @@ const NewsCard = ({ news }: NewsCardProps) => {
       <div className="relative w-full aspect-video overflow-hidden">
         <img
           src={
-            image_url || "https://via.placeholder.com/800x450?text=Sports+News"
+            imageUrl || "https://via.placeholder.com/800x450?text=Sports+News"
           }
           alt={title}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
