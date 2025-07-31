@@ -8,8 +8,8 @@ const NavbarMain = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <>
-      <div className="bg-accent w-full h-14 top-0 fixed flex items-center justify-between px-4 md:justify-around z-50">
+    <main>
+      <div className="bg-accent w-full h-14 top-0 fixed flex items-center justify-between px-4 md:justify-around z-50 ">
         <Link
           href={"/"}
           className="bg-primary pt-1 px-2  flex items-center justify-center text-2xl font-semibold tracking-wider"
@@ -19,21 +19,21 @@ const NavbarMain = () => {
 
         {/* Desktop Navigation */}
         <ul className="hidden md:flex items-center gap-6">
-          <li className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer">
+          <Link href={"football"} className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer">
             ფეხბურთი
-          </li>
-          <li className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer">
+          </Link>
+          <Link href={"basketball"} className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer">
             კალათბურთი
-          </li>
-          <li className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer">
+          </Link>
+          <Link href={"mma"} className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer">
             MMA
-          </li>
-          <li className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer">
+          </Link>
+          <Link href={"f1"} className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer">
             ფორმულა 1
-          </li>
-          <li className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer">
+          </Link>
+          <Link href={"other"} className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer">
             სხვა...
-          </li>
+          </Link>
         </ul>
 
         {/* Mobile Menu Button */}
@@ -91,7 +91,7 @@ const NavbarMain = () => {
           </ul>
         </div>
       )}
-    </>
+    </main>
   );
 };
 

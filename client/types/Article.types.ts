@@ -1,4 +1,4 @@
-type NewsItem = {
+export type NewsItem = {
   _id: string;
   title: string;
   badge: string;
@@ -9,7 +9,7 @@ type NewsItem = {
   createdAt: Date;
 };
 
-type HistoryItem = {
+export type HistoryItem = {
   _id: string;
   title: string;
   badge: string;

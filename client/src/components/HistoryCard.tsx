@@ -1,9 +1,11 @@
+import { HistoryItem } from "../../types/Article.types";
+
 interface NewsCardProps {
   history: HistoryItem;
 }
 
 const HistoryCard = ({ history }: NewsCardProps) => {
-  const { category, content, author, title, createdAt, badge, id, imageUrl } =
+  const { category, content, author, title, createdAt, badge, _id, imageUrl } =
     history;
 
   const formattedDate = new Date(createdAt).toLocaleDateString("en-US", {

@@ -1,9 +1,9 @@
-const Loading = () => {
+const LoadingSmall = () => {
   return (
-    <div className="h-screen w-screen absolute z-50 inset-0 overflow-hidden flex items-center justify-center bg-secondary">
+    <div className="flex justify-center items-center py-12 w-full">
       <svg
         aria-hidden="true"
-        className="w-8 h-8 text-gray-200 animate-spin dark:text-accent/30 fill-primary"
+        className="w-8 h-8 text-gray-300 animate-spin fill-primary"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -22,4 +22,4 @@ const Loading = () => {
   );
 };
 
-export default Loading;
+export default LoadingSmall;

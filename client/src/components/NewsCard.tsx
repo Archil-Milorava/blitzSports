@@ -1,3 +1,5 @@
+import { NewsItem } from "../../types/Article.types";
+
 interface NewsCardProps {
   news: NewsItem;
 }

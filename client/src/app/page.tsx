@@ -1,6 +1,4 @@
 import Title from "@/components/Title";
-import HeroMain from "@/features/hero/HeroMain";
-import NavbarMain from "@/features/navbar/NavbarMain";
 
 import localFont from "next/font/local";
 
@@ -8,21 +6,15 @@ import MMa_BG_BIG from "@/assets/MMa-Bg-Big.png";
 import f1_BG_BIG from "@/assets/f1-Bg-Big.png";
 import HistoryCard from "@/components/HistoryCard";
 
-import Footer from "@/features/footer/Footer";
-import QASection from "@/features/landing/QASection";
-import Image from "next/image";
 import NewsCard from "@/components/NewsCard";
+import QASection from "@/features/landing/QASection";
+import { getApiBaseUrl } from "@/utils/getBaseUrl";
+import Image from "next/image";
+import { HistoryItem, NewsItem } from "../../types/Article.types";
 
 const getFontGeo = localFont({
   src: "../../public/fonts/font_geo.ttf",
 });
-
-const getApiBaseUrl = () => {
-  if (process.env.NEXT_ENV === "production") {
-    return process.env.NEXT_PUBLIC_API_URL;
-  }
-  return "http://localhost:8000";
-};
 
 const Page = async () => {
   const API_BASE_URL = getApiBaseUrl();
@@ -32,8 +24,8 @@ const Page = async () => {
 
   try {
     const [newsResponse, historiesResponse] = await Promise.all([
-      fetch(`${API_BASE_URL}/api/v1/article/landing/news`),
-      fetch(`${API_BASE_URL}/api/v1/article/landing/histories`),
+      fetch(`${API_BASE_URL}/article/landing/news`),
+      fetch(`${API_BASE_URL}/article/landing/histories`),
     ]);
 
     if (!newsResponse.ok) throw new Error("Failed to fetch news");
@@ -42,15 +34,14 @@ const Page = async () => {
     news = await newsResponse.json();
     histories = await historiesResponse.json();
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.log(error);
   }
 
   return (
     <main
-      className={`w-full min-h-screen bg-[#D9D9D9] ${getFontGeo.className}`}
+      className={`w-full min-h-screen bg-[#D9D9D9] ${getFontGeo.className} py-10`}
     >
-      <NavbarMain />
-      <HeroMain />
+      {/* <HeroMain /> */}
       <section className="px-4 sm:px-8 md:px-14 lg:px-44 transition-all duration-300">
         {/* News Section */}
         <div className="mb-16">
@@ -109,7 +100,6 @@ const Page = async () => {
         </div>
         <QASection />
       </section>
-      <Footer />
     </main>
   );
 };
