@@ -20,4 +20,6 @@ articleRoute.get("/category/:category", getArticlesByCategory);
 articleRoute.post("/create", createArticle);
 articleRoute.patch("/update/:id", updateArticle);
 
+
+
 export default articleRoute;
