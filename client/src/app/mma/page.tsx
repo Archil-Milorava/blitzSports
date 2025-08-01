@@ -3,7 +3,6 @@
 import LoadingSmall from "@/components/LoadingSmall";
 import NewsCard from "@/components/NewsCard";
 import Pagination from "@/components/Pagination";
-import Footer from "@/features/footer/Footer";
 import { getApiBaseUrl } from "@/utils/getBaseUrl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -16,10 +15,7 @@ const FootballPage = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const initialPage = parseInt(searchParams.get("page") || "1", 10);
-  const category = pathname;
-
-  console.log(category);
-  
+  const category = pathname;  
 
   const [articles, setArticles] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -69,7 +65,7 @@ const FootballPage = () => {
       <section className="max-w-6xl mx-auto px-6 lg:px-12 py-16 flex flex-col gap-12 flex-1">
         {/* Title */}
         <h1 className="text-4xl py-2 md:text-5xl font-extrabold text-gray-900 text-center capitalize tracking-wide drop-shadow-sm">
-          ფეხბურთი
+          MMA
         </h1>
 
         {/* Articles Grid */}

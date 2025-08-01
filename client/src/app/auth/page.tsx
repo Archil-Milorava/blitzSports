@@ -4,15 +4,17 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import type { CredentialResponse } from "@react-oauth/google";
+import { getApiBaseUrl } from "@/utils/getBaseUrl";
 
 const Page = () => {
+  const BASE_URL = getApiBaseUrl();
   const router = useRouter();
 
   const handleSuccess = async (response: CredentialResponse) => {
     const token = response.credential;
 
     try {
-      const res = await axios.post("http://localhost:8000/api/v1/auth/google", {
+      const res = await axios.post(`${BASE_URL}/auth/google`, {
         token,
       });
       const user = res.data;

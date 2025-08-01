@@ -3,7 +3,6 @@
 import LoadingSmall from "@/components/LoadingSmall";
 import NewsCard from "@/components/NewsCard";
 import Pagination from "@/components/Pagination";
-import Footer from "@/features/footer/Footer";
 import { getApiBaseUrl } from "@/utils/getBaseUrl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
