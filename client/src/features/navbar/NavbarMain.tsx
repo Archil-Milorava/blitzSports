@@ -2,10 +2,20 @@
 
 import { User } from "lucide-react";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const NavbarMain = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [user, setUser] = useState<{ avatar?: string } | null>(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, [user]);
+
+  const avatar = user?.avatar;
 
   return (
     <main>
@@ -19,19 +29,34 @@ const NavbarMain = () => {
 
         {/* Desktop Navigation */}
         <ul className="hidden md:flex items-center gap-6">
-          <Link href={"football"} className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer">
+          <Link
+            href={"football"}
+            className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer"
+          >
             ფეხბურთი
           </Link>
-          <Link href={"basketball"} className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer">
+          <Link
+            href={"basketball"}
+            className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer"
+          >
             კალათბურთი
           </Link>
-          <Link href={"mma"} className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer">
+          <Link
+            href={"mma"}
+            className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer"
+          >
             MMA
           </Link>
-          <Link href={"f1"} className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer">
+          <Link
+            href={"f1"}
+            className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer"
+          >
             ფორმულა 1
           </Link>
-          <Link href={"other"} className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer">
+          <Link
+            href={"other"}
+            className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer"
+          >
             სხვა...
           </Link>
         </ul>
@@ -64,9 +89,22 @@ const NavbarMain = () => {
         </div>
 
         {/* Desktop User Button */}
-        <button className="hidden md:block bg-secondary p-1 hover:opacity-90 cursor-pointer rounded-md">
-          <User size={20} color="white" />
-        </button>
+        {user ? (
+          <Link href={"profile"}>
+            <img
+              src={avatar}
+              alt="avatar"
+              className="h-10 w-10 rounded-full overflow-hidden"
+            />
+          </Link>
+        ) : (
+          <Link
+            href={"auth"}
+            className="hidden md:block bg-secondary p-1 hover:opacity-90 cursor-pointer rounded-md"
+          >
+            <User size={20} color="white" />
+          </Link>
+        )}
       </div>
 
       {/* Mobile Menu */}

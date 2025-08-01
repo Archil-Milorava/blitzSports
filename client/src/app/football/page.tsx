@@ -16,8 +16,6 @@ const FootballPage = () => {
   const searchParams = useSearchParams();
   const initialPage = parseInt(searchParams.get("page") || "1", 10);
   const category = pathname;
-
-  console.log(category);
   
 
   const [articles, setArticles] = useState<NewsItem[]>([]);
