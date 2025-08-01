@@ -12,10 +12,17 @@ const PORT = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: [
+      process.env.NODE_ENV === "production"
+        ? process.env.ALLOWED_ORIGIN_PRODUCTION
+        : process.env.ALLOWED_ORIGIN_DEVELOPMENT,
+    ],
     credentials: true,
   })
 );
+
+
+
 
 app.use(express.json());
 
