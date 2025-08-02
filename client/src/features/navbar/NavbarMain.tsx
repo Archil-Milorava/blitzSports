@@ -7,129 +7,122 @@ import React, { useEffect, useState } from "react";
 const NavbarMain = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [user, setUser] = useState<{ avatar?: string } | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true); // Fix hydration mismatch
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
-  }, [user]);
+  }, []);
+
+  if (!mounted) return null; // Avoid SSR mismatch
 
   const avatar = user?.avatar;
 
+  const navItems = [
+    { href: "/football", label: "ფეხბურთი" },
+    { href: "/basketball", label: "კალათბურთი" },
+    { href: "/mma", label: "MMA" },
+    { href: "/f1", label: "ფორმულა 1" },
+    { href: "/other", label: "სხვა..." },
+  ];
+
   return (
-    <main>
-      <div className="bg-accent w-full h-14 top-0 fixed flex items-center justify-between px-4 md:justify-around z-50 ">
-        <Link
-          href={"/"}
-          className="bg-primary pt-1 px-2  flex items-center justify-center text-2xl font-semibold tracking-wider"
-        >
-          BLITZ
-        </Link>
+    <header className="bg-accent w-full h-14 fixed top-0 left-0 flex items-center justify-between px-4 md:px-[11rem] z-50">
+      {/* Logo */}
+      <Link
+        href="/"
+        className="bg-secondary text-primary tracking-widest px-2 py-0.5 md:text-2xl font-semibold hover:text-secondary hover:bg-primary cursor-pointer transition-all"
+      >
+        BLITZ
+      </Link>
 
-        {/* Desktop Navigation */}
-        <ul className="hidden md:flex items-center gap-6">
+      {/* Desktop Navigation */}
+      <nav className="hidden md:flex items-center gap-6 ">
+        {navItems.map((item) => (
           <Link
-            href={"football"}
-            className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer"
+            key={item.href}
+            href={item.href}
+            className="text-white hover:text-primary transition-all font-semibold tracking-wide"
           >
-            ფეხბურთი
+            {item.label}
           </Link>
-          <Link
-            href={"basketball"}
-            className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer"
-          >
-            კალათბურთი
-          </Link>
-          <Link
-            href={"mma"}
-            className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer"
-          >
-            MMA
-          </Link>
-          <Link
-            href={"f1"}
-            className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer"
-          >
-            ფორმულა 1
-          </Link>
-          <Link
-            href={"other"}
-            className="font-semibold text-white tracking-wider hover:text-secondary transition-all cursor-pointer"
-          >
-            სხვა...
-          </Link>
-        </ul>
+        ))}
+      </nav>
 
-        {/* Mobile Menu Button */}
-        <div className="md:hidden flex items-center gap-4 ">
-          <button className="bg-secondary p-1 hover:opacity-90 cursor-pointer ">
-            <User size={20} color="white" />
-          </button>
-          <button
-            className="flex flex-col justify-center items-center"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            <span
-              className={`bg-white block w-6 h-0.5 transition-all ${
-                isMenuOpen ? "rotate-45 translate-y-2" : ""
-              }`}
-            ></span>
-            <span
-              className={`bg-white block w-6 h-0.5 mt-1.5 transition-all ${
-                isMenuOpen ? "opacity-0" : "opacity-100"
-              }`}
-            ></span>
-            <span
-              className={`bg-white block w-6 h-0.5 mt-1.5 transition-all ${
-                isMenuOpen ? "-rotate-45 -translate-y-2" : ""
-              }`}
-            ></span>
-          </button>
-        </div>
-
-        {/* Desktop User Button */}
-        {user ? (
-          <Link href={"profile"}>
+      {/* Desktop Avatar */}
+      <div className="hidden md:block">
+        <Link href={user ? "/profile" : "/auth"}>
+          {user ? (
             <img
               src={avatar}
               alt="avatar"
-              className="h-10 w-10 rounded-full overflow-hidden"
+              className="w-8 h-8 overflow-hidden rounded-full"
             />
-          </Link>
-        ) : (
-          <Link
-            href={"auth"}
-            className="hidden md:block bg-secondary p-1 hover:opacity-90 cursor-pointer rounded-md"
-          >
-            <User size={20} color="white" />
-          </Link>
-        )}
+          ) : (
+            <User className="text-white hover:opacity-90" />
+          )}
+        </Link>
+      </div>
+
+      {/* Mobile Burger Button */}
+      <div className="md:hidden flex items-center gap-3">
+        {/* Avatar for Mobile */}
+        <Link href={user ? "/profile" : "/auth"}>
+          {user ? (
+            <img
+              src={avatar}
+              alt="avatar"
+              className="w-8 h-8 overflow-hidden rounded-full"
+            />
+          ) : (
+            <User className="text-primary hover:opacity-90" />
+          )}
+        </Link>
+
+        {/* Burger */}
+        <button
+          className="flex flex-col justify-center items-center w-8 h-8 relative cursor-pointer"
+          onClick={() => setIsMenuOpen((prev) => !prev)}
+        >
+          <span
+            className={`bg-white h-0.5 w-6 rounded-sm transition-all ${
+              isMenuOpen ? "rotate-40 translate-y-2" : ""
+            }`}
+          />
+          <span
+            className={`bg-white h-0.5 w-6 rounded-sm transition-all my-1 ${
+              isMenuOpen ? "opacity-0" : "opacity-100"
+            }`}
+          />
+          <span
+            className={`bg-white h-0.5 w-6 rounded-sm transition-all ${
+              isMenuOpen ? "-rotate-40 -translate-y-1" : ""
+            }`}
+          />
+        </button>
       </div>
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="fixed top-14 left-0 w-full bg-accent z-40 md:hidden shadow-lg transition-all duration-1000">
+        <div className="fixed top-14 left-0 w-full bg-accent z-40 md:hidden shadow-lg transition-all duration-1000 cursor-pointer">
           <ul className="flex flex-col items-center gap-4 py-4">
-            <li className="font-semibold text-white text-sm tracking-widest hover:text-primary transition-all cursor-pointer w-full text-center py-1">
-              ფეხბურთი
-            </li>
-            <li className="font-semibold text-white text-sm tracking-widest hover:text-primary transition-all cursor-pointer w-full text-center py-1">
-              კალათბურთი
-            </li>
-            <li className="font-semibold text-white text-sm tracking-widest hover:text-primary transition-all cursor-pointer w-full text-center py-1">
-              MMA
-            </li>
-            <li className="font-semibold text-white text-sm tracking-widest hover:text-primary transition-all cursor-pointer w-full text-center py-1">
-              ფორმულა 1
-            </li>
-            <li className="font-semibold text-white text-sm tracking-widest hover:text-primary transition-all cursor-pointer w-full text-center py-1">
-              სხვა..
-            </li>
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setIsMenuOpen(false)}
+                className="font-semibold text-white text-sm tracking-widest hover:text-primary transition-all cursor-pointer w-full text-center py-2"
+              >
+                {item.label}
+              </Link>
+            ))}
           </ul>
         </div>
       )}
-    </main>
+    </header>
   );
 };
 
