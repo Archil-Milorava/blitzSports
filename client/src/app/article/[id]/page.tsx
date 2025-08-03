@@ -34,7 +34,6 @@ async function getArticle(id: string): Promise<Article | null> {
   return res.json();
 }
 
-
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
@@ -43,11 +42,6 @@ export async function generateMetadata({
 
   if (!article) return { title: "Article Not Found" };
 
-  // Ensure image URL is absolute
-  const imageUrl = article.imageUrl.startsWith('http') 
-    ? article.imageUrl 
-    : `${BASE_URL}${article.imageUrl}`;
-
   return {
     title: `${article.title} | Blitz Sports`,
     description: article.content.slice(0, 150),
@@ -55,23 +49,21 @@ export async function generateMetadata({
       title: article.title,
       description: article.content.slice(0, 150),
       url: `https://www.blitzsports.live/article/${id}`,
-      siteName: 'Blitz Sports',
+      siteName: "Blitz Sports",
       images: [
         {
-          url: imageUrl,
-          width: 1200,
-          height: 630,
+          url: article.imageUrl,
           alt: article.title,
         },
       ],
-      locale: 'en_US',
-      type: 'article',
+      locale: "en_US",
+      type: "article",
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title: article.title,
       description: article.content.slice(0, 150),
-      images: [imageUrl],
+      images: [article.imageUrl],
     },
   };
 }
