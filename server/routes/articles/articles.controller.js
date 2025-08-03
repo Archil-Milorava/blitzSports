@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 import Article from "../../models/articleModel.js";
 import User from "../../models/userModel.js";
 
@@ -100,6 +102,29 @@ export const getArticlesByCategory = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const getArticle = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: "Invalid article ID" });
+  }
+  try {
+    const news = await Article.findById(id).populate(
+      "author",
+      "avatar fullName"
+    );
+
+    if (!news) {
+      return res.status(404).json({ message: "Article not found" });
+    }
+
+    res.status(200).json(news);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching article" });
   }
 };
 
