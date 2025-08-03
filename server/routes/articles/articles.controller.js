@@ -128,16 +128,23 @@ export const getArticle = async (req, res) => {
   }
 };
 
+
+
 export const createArticle = async (req, res) => {
   try {
-    const { title, content, imageUrl, badge, category, author } = req.body;
+    const { title, content, imageUrl, badge, category, author, twitterLink } = req.body;
+
+    if (!title || !content || !badge || !author) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
 
     const newArticle = new Article({
       title,
       content,
-      imageUrl,
+      imageUrl: imageUrl || "",
       badge,
-      category,
+      category: category || "",
+      twitterLink: twitterLink || "",
       author,
     });
 
@@ -147,14 +154,13 @@ export const createArticle = async (req, res) => {
       $push: { articles: savedArticle._id },
     });
 
-    res.status(201).json({
-      message: "Article created",
-    });
+    res.status(201).json({ message: "Article created", article: savedArticle });
   } catch (err) {
     console.error("Error creating article:", err);
     res.status(500).json({ message: "Server error" });
   }
 };
+
 
 export const updateArticle = async (req, res) => {
   try {

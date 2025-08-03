@@ -10,15 +10,14 @@ const NavbarMain = () => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true); // Fix hydration mismatch
+    setMounted(true); 
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
   }, []);
 
-  if (!mounted) return null; // Avoid SSR mismatch
-
+  if (!mounted) return null; 
   const avatar = user?.avatar;
 
   const navItems = [

@@ -19,6 +19,10 @@ const ArticleSchema = new Schema(
       ref: "User",
       required: true,
     },
+    twitterLink: {
+      type: String,
+      default: "",
+    },
   },
   { timestamps: true }
 );
