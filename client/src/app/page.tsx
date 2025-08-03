@@ -2,14 +2,13 @@ import Title from "@/components/Title";
 
 import localFont from "next/font/local";
 
-import MMa_BG_BIG from "@/assets/MMa-Bg-Big.png";
-import f1_BG_BIG from "@/assets/f1-Bg-Big.png";
 import HistoryCard from "@/components/HistoryCard";
 
+import F1Banner from "@/components/F1Banner";
+import MmaBanner from "@/components/MmaBanner";
 import NewsCard from "@/components/NewsCard";
 import QASection from "@/features/landing/QASection";
 import { getApiBaseUrl } from "@/utils/getBaseUrl";
-import Image from "next/image";
 import { HistoryItem, NewsItem } from "../../types/Article.types";
 
 const getFontGeo = localFont({
@@ -62,42 +61,8 @@ const Page = async () => {
             ))}
           </div>
         </div>
-
-        {/* Full-width Image Banner */}
-        <div className="w-full h-80 md:h-[28rem] relative overflow-hidden rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 group cursor-pointer">
-          <Image
-            src={MMa_BG_BIG}
-            alt="MMa Background"
-            fill
-            className="object-cover group-hover:scale-105 transition-transform duration-500"
-            quality={90}
-            priority={false}
-          />
-          {/* Overlay with MMA text */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent flex items-center justify-center">
-            <h2 className="text-primary text-6xl sm:text-7xl md:text-8xl font-bold tracking-wider transform group-hover:scale-110 transition-transform duration-500">
-              MMA
-            </h2>
-          </div>
-        </div>
-
-        {/* Full-width Image Banner 2 */}
-        <div className="w-full h-80 md:h-[35rem] relative overflow-hidden rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 group mt-20 cursor-pointer">
-          <Image
-            src={f1_BG_BIG}
-            alt="f1 Background"
-            fill
-            className="object-cover group-hover:scale-105 transition-transform duration-500"
-            quality={90}
-            priority={false}
-          />
-          {/* Overlay with MMA text */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent flex items-center justify-center">
-            <h2 className="text-primary text-2xl sm:text-4xl md:text-5xl font-bold tracking-wider transform group-hover:scale-110 transition-transform duration-500">
-              შემოაბიჯე f1 სამყაროში
-            </h2>
-          </div>
-        </div>
+        <MmaBanner />
+        <F1Banner />
         <QASection />
       </section>
     </main>

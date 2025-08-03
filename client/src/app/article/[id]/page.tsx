@@ -1,6 +1,7 @@
+import MmaBanner from "@/components/MmaBanner";
+import SocMediaShare from "@/components/SocMediaShare";
 import { getApiBaseUrl } from "@/utils/getBaseUrl";
 import { Metadata } from "next";
-import Link from "next/link";
 
 export interface Author {
   _id: string;
@@ -81,51 +82,61 @@ export default async function ArticlePage({ params }: PageProps) {
 
   const shareUrl = `https://www.blitzsports.live/article/${id}`;
   const shareText = encodeURIComponent(article.title);
+  const publishDate = new Date(article.createdAt).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
   return (
-    <main className="max-w-4xl mx-auto px-4 md:px-0 pb-20">
-      {/* Hero Image */}
-      <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-lg mb-8">
+    <main className="min-h-screen  px-4 sm:px-6 lg:px-56 py-[5rem] bg-[#D9D9D9] overflow-hidden">
+      {/* image */}
+      <div className="mb-8 rounded-xl overflow-hidden shadow-lg">
         <img
           src={article.imageUrl}
           alt={article.title}
-          className="object-cover"
+          className="w-full h-auto object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-        <h1 className="absolute bottom-4 left-4 text-3xl md:text-5xl font-bold text-white drop-shadow-lg">
-          {article.title}
-        </h1>
       </div>
-
-      {/* Article Content */}
-      <article className="prose prose-lg max-w-none text-gray-800 mt-6">
-        {article.content}
+      <div>
+        <div className="flex items-center gap-2 pb-4">
+          <p className="text-sm text-gray-500">{publishDate}</p>
+          <p className="text-xs text-white bg-secondary px-4 py-1 rounded-full">
+            {article.category}
+          </p>
+        </div>
+      </div>
+      {/* titile */}
+      <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-4">
+        {article.title}
+      </h1>
+      {/* content */}
+      <article className="prose prose-lg max-w-none text-gray-800">
+        <div className="text-lg leading-relaxed text-gray-700 space-y-6">
+          {article.content.split("\n").map((paragraph, index) => (
+            <p key={index}>{paragraph}</p>
+          ))}
+        </div>
       </article>
-
-      {/* Social Share Buttons */}
-      <div className="flex gap-4 mt-10 flex-wrap">
-        <Link
-          href={`https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}`}
-          target="_blank"
-          className="bg-blue-400 text-white px-4 py-2 rounded hover:opacity-90 transition"
-        >
-          Share on Twitter
-        </Link>
-        <Link
-          href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`}
-          target="_blank"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:opacity-90 transition"
-        >
-          Share on Facebook
-        </Link>
-        <Link
-          href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`}
-          target="_blank"
-          className="bg-blue-700 text-white px-4 py-2 rounded hover:opacity-90 transition"
-        >
-          Share on LinkedIn
-        </Link>
+      {/* soc media */}
+      <SocMediaShare shareText={shareText} shareUrl={shareUrl} />
+      {/* author */}
+      <div className="flex items-center space-x-4 mt-11  border-accent  border-t border-b p-2">
+        <div className="flex items-center">
+          <img
+            src={article.author.avatar}
+            alt={article.author.fullName}
+            className="w-10 h-10 rounded-full object-cover mr-3"
+          />
+          <div>
+            <p className="text-sm font-medium text-gray-900">
+              {article.author.fullName}
+            </p>
+            <p className="text-xs text-gray-500">{publishDate}</p>
+          </div>
+        </div>
       </div>
+      <MmaBanner />
     </main>
   );
 }
