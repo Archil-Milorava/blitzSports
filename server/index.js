@@ -1,6 +1,6 @@
 import "dotenv/config";
-import express from "express";
 import cors from "cors";
+import express from "express";
 import { connectDB } from "./config/connectDB.js";
 
 import googleAuthRoute from "./routes/auth/googleAuth.js";
