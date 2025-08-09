@@ -11,7 +11,7 @@ const Page = () => {
   const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
 
   const [fileError, setFileError] = useState("");
-  const MAX_IMAGE_SIZE = 1 * 1024 * 1024;
+  const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 
   const [title, setTitle] = useState("");
   const [twitterLink, setTwitterLink] = useState("");
