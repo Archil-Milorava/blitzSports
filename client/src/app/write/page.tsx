@@ -10,13 +10,16 @@ const Page = () => {
   const router = useRouter();
   const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
 
+  const [fileError, setFileError] = useState("");
+  const MAX_IMAGE_SIZE = 1 * 1024 * 1024;
+
   const [title, setTitle] = useState("");
   const [twitterLink, setTwitterLink] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [editorContent, setEditorContent] = useState("");
   const [category, setCategory] = useState("football");
   const [section, setSection] = useState("news");
-  const [isSubmitting, setIsSubmitting] = useState(false); 
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const userData = localStorage.getItem("user");
@@ -60,7 +63,7 @@ const Page = () => {
         reader.onerror = reject;
       });
 
-    const imageUrl = file ? await toBase64(file) : "";    
+    const imageUrl = file ? await toBase64(file) : "";
 
     try {
       const res = await fetch(`${baseUrl}/article/create`, {
@@ -83,7 +86,7 @@ const Page = () => {
       router.push("/");
     } catch (error) {
       console.error(error);
-      alert("Error posting article");
+      alert(error);
     } finally {
       setIsSubmitting(false);
     }
@@ -116,24 +119,33 @@ const Page = () => {
     );
   }
 
-
-
   return (
     <form
       onSubmit={handleSubmit}
-      className={`min-h-screen w-full my-[4rem] md:px-[10rem] flex flex-col gap-6 px-4 ${isSubmitting && "opacity-20 animate-pulse"}`}
+      className={`min-h-screen w-full my-[4rem] md:px-[10rem] flex flex-col gap-6 px-4 ${
+        isSubmitting && "opacity-20 animate-pulse"
+      }`}
     >
       <h1 className="text-3xl font-bold text-gray-800 mb-4">დაწერე სტატია</h1>
 
       {/* Featured Image */}
       <div className="space-y-2">
         <label className="block text-sm font-medium text-gray-700">
-          Featured Image
+          Featured Image (Max 5mb)
         </label>
         <input
-        required
+          required
           type="file"
-          onChange={(e) => setFile(e.target.files?.[0] || null)}
+          onChange={(e) => {
+            const selectedFile = e.target.files?.[0] || null;
+            if (selectedFile && selectedFile.size > MAX_IMAGE_SIZE) {
+              setFileError("Image is too large!");
+              setFile(null);
+            } else {
+              setFileError("");
+              setFile(selectedFile);
+            }
+          }}
           className="block w-full text-sm text-gray-500
             file:mr-4 file:py-2 file:px-4
             file:rounded-md file:border-0
@@ -141,6 +153,7 @@ const Page = () => {
             file:bg-violet-50 file:text-violet-700
             hover:file:bg-violet-100"
         />
+        {fileError && <p className="text-red-600 text-sm mt-1">{fileError}</p>}
       </div>
 
       {/* Category */}
