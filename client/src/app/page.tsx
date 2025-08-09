@@ -44,7 +44,7 @@ const Page = async () => {
       <section className="px-4 sm:px-8 md:px-14 lg:px-44 transition-all duration-300">
         {/* News Section */}
         <div className="mb-16">
-          <Title title="ახალი ამბები" />
+          <Title title="ახალი ამბები" to="/news" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 my-8">
             {news.map((news) => (
               <NewsCard news={news} key={news._id} />
@@ -54,7 +54,7 @@ const Page = async () => {
 
         {/* History Section */}
         <div className="mb-16">
-          <Title title="ისტორიები" />
+          <Title title="ისტორიები" to="/histories" />
           <div className="flex flex-col gap-8 my-8">
             {histories.map((history) => (
               <HistoryCard history={history} key={history._id} />
