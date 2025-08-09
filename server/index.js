@@ -18,6 +18,8 @@ app.use(
         : process.env.ALLOWED_ORIGIN_DEVELOPMENT,
     ],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
