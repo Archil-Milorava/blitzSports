@@ -23,8 +23,8 @@ const Page = async () => {
 
   try {
     const [newsResponse, historiesResponse] = await Promise.all([
-      fetch(`${API_BASE_URL}/article/landing/news`),
-      fetch(`${API_BASE_URL}/article/landing/histories`),
+      fetch(`${API_BASE_URL}/article/landing/news`, { cache: "no-store" }),
+      fetch(`${API_BASE_URL}/article/landing/histories`, { cache: "no-store" }),
     ]);
 
     if (!newsResponse.ok) throw new Error("Failed to fetch news");
