@@ -3,6 +3,9 @@ import SocMediaShare from "@/components/SocMediaShare";
 import { getApiBaseUrl } from "@/utils/getBaseUrl";
 import { Metadata } from "next";
 
+import "./article-styles.css";
+import getPlainTextExcerpt from "@/utils/getPlainTextExcerpt";
+
 export interface Author {
   _id: string;
   fullName: string;
@@ -43,12 +46,14 @@ export async function generateMetadata({
 
   if (!article) return { title: "Article Not Found" };
 
+  const shareText = getPlainTextExcerpt(article.content)
+
   return {
     title: `${article.title} | Blitz Sports`,
-    description: article.content.slice(0, 150),
+    description: shareText,
     openGraph: {
       title: article.title,
-      description: article.content.slice(0, 150),
+      description: shareText,
       url: `https://www.blitzsports.live/article/${id}`,
       siteName: "Blitz Sports",
       images: [
@@ -63,7 +68,7 @@ export async function generateMetadata({
     twitter: {
       card: "summary_large_image",
       title: article.title,
-      description: article.content.slice(0, 150),
+      description: shareText,
       images: [article.imageUrl],
     },
   };
@@ -89,9 +94,9 @@ export default async function ArticlePage({ params }: PageProps) {
   });
 
   return (
-    <main className="min-h-screen  px-4 sm:px-6 lg:px-56 py-[5rem] bg-[#D9D9D9] overflow-hidden">
+    <main className="min-h-screen  px-4 sm:px-6 md:px-40 lg:px-72 py-[5rem] bg-[#D9D9D9] overflow-hidden">
       {/* image */}
-      <div className="mb-8 rounded-xl overflow-hidden shadow-lg">
+      <div className="mb-8 rounded-xl max-h-[40rem] overflow-hidden shadow-lg">
         <img
           src={article.imageUrl}
           alt={article.title}
@@ -111,12 +116,11 @@ export default async function ArticlePage({ params }: PageProps) {
         {article.title}
       </h1>
       {/* content */}
-      <article className="prose prose-lg max-w-none text-gray-800">
-        <div className="text-lg leading-relaxed text-gray-700 space-y-6">
-          {article.content.split("\n").map((paragraph, index) => (
-            <p key={index}>{paragraph}</p>
-          ))}
-        </div>
+      <article>
+        <div
+          className="article-content"
+          dangerouslySetInnerHTML={{ __html: article.content }}
+        />
       </article>
       {/* soc media */}
       <SocMediaShare shareText={shareText} shareUrl={shareUrl} />

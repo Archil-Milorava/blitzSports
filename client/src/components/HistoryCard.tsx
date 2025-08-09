@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { HistoryItem } from "../../types/Article.types";
+import getPlainTextExcerpt from "@/utils/getPlainTextExcerpt";
 
 interface NewsCardProps {
   history: HistoryItem;
@@ -14,8 +16,9 @@ const HistoryCard = ({ history }: NewsCardProps) => {
     day: "2-digit",
   });
 
+ 
   return (
-    <article className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col md:flex-row h-auto md:h-64 group">
+    <Link href={`/article/${_id}`} className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col md:flex-row h-auto md:h-64 group cursor-pointer">
       {/* Image Section */}
       <div className="relative w-full md:w-2/5 h-48 md:h-full overflow-hidden">
         <img
@@ -26,7 +29,7 @@ const HistoryCard = ({ history }: NewsCardProps) => {
           width={300}
           height={200}
         />
-        <span className="absolute top-2 left-2 bg-primary text-white text-xs px-2 py-1 rounded font-semibold capitalize">
+        <span className="absolute top-2 left-2 bg-primary text-black tracking-wider text-xs px-2 py-1 rounded font-semibold capitalize">
           {category.toLowerCase()}
         </span>
       </div>
@@ -34,11 +37,11 @@ const HistoryCard = ({ history }: NewsCardProps) => {
       {/* Content Section */}
       <div className="flex flex-col p-5 md:p-6 w-full md:w-3/5">
         <div className="flex-grow">
-          <h2 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 hover:text-primary transition-colors duration-200">
+          <h2 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 ">
             {title}
           </h2>
           <p className="text-gray-600 text-sm md:text-base mb-4 line-clamp-3">
-            {content}
+            {getPlainTextExcerpt(content)}
           </p>
         </div>
 
@@ -46,15 +49,15 @@ const HistoryCard = ({ history }: NewsCardProps) => {
           <div className="text-xs text-gray-500 font-medium">
             {formattedDate}
           </div>
-          <button
+          {/* <button
             className="text-primary hover:text-primary-dark text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/50 rounded px-2 py-1 transition-colors"
             aria-label={`Read more about ${title}`}
           >
             Read more →
-          </button>
+          </button> */}
         </div>
       </div>
-    </article>
+    </Link>
   );
 };
 

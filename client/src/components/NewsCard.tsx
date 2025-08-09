@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { NewsItem } from "../../types/Article.types";
 
 interface NewsCardProps {
@@ -14,8 +15,17 @@ const NewsCard = ({ news }: NewsCardProps) => {
     day: "numeric",
   });
 
+  const getPlainTextExcerpt = (html: string, length: number = 100) => {
+    const plainText = html.replace(/<[^>]*>?/gm, "");
+    return plainText.length > length
+      ? plainText.substring(0, length) + "..."
+      : plainText;
+  };
   return (
-    <article className="group relative bg-[#FFFCF1] rounded-sm overflow-hidden shadow-xs hover:shadow-sm transition-all duration-300 h-full flex flex-col transform hover:-translate-y-1 cursor-pointer">
+    <Link
+      href={`article/${_id}`}
+      className="group relative bg-[#FFFCF1] rounded-sm overflow-hidden shadow-xs hover:shadow-sm transition-all duration-300 h-full flex flex-col transform hover:-translate-y-1 cursor-pointer"
+    >
       {/* Image with gradient overlay */}
       <div className="relative w-full aspect-video overflow-hidden">
         <img
@@ -49,13 +59,15 @@ const NewsCard = ({ news }: NewsCardProps) => {
 
         {/* Content excerpt with fade effect */}
         <div className="relative mb-4">
-          <p className="text-gray-600 text-sm line-clamp-2">{content}</p>
+          <p className="text-gray-600 text-sm line-clamp-2">
+            {getPlainTextExcerpt(content)}
+          </p>
         </div>
       </div>
 
       {/* Hover state indicator */}
       <div className="absolute inset-x-0 bottom-0 h-1 bg-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-    </article>
+    </Link>
   );
 };
 

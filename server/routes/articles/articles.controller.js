@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import cloudinary from "../../config/cloudinary.js";
+
 
 import Article from "../../models/articleModel.js";
 import User from "../../models/userModel.js";
@@ -128,14 +130,25 @@ export const getArticle = async (req, res) => {
   }
 };
 
-
-
 export const createArticle = async (req, res) => {
   try {
-    const { title, content, imageUrl, badge, category, author, twitterLink } = req.body;
+    const { title, content, badge, category, author, twitterLink } = req.body;
+    let { imageUrl } = req.body;
 
     if (!title || !content || !badge || !author) {
       return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    if (imageUrl) {
+      try {
+        const uploadResponse = await cloudinary.uploader.upload(imageUrl, {
+          folder: "articles",
+        });
+        imageUrl = uploadResponse.secure_url;
+      } catch (uploadErr) {
+        console.error("Cloudinary upload error:", uploadErr);
+        return res.status(500).json({ message: "Image upload failed" });
+      }
     }
 
     const newArticle = new Article({
@@ -161,7 +174,6 @@ export const createArticle = async (req, res) => {
   }
 };
 
-
 export const updateArticle = async (req, res) => {
   try {
     const articleId = req.params.id;
@@ -181,3 +193,14 @@ export const updateArticle = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+
+export const deleteAll =async (req, res) => {
+  try {
+    await Article.deleteMany()
+    res.send("deleted")
+  } catch (error) {
+    console.log(error);
+    
+  }
+}

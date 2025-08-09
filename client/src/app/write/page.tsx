@@ -3,8 +3,10 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import RichTextEditor from "@/features/TipTap/RichTextEditor";
+import { getApiBaseUrl } from "@/utils/getBaseUrl";
 
 const Page = () => {
+  const baseUrl = getApiBaseUrl();
   const router = useRouter();
   const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
 
@@ -14,6 +16,7 @@ const Page = () => {
   const [editorContent, setEditorContent] = useState("");
   const [category, setCategory] = useState("football");
   const [section, setSection] = useState("news");
+  const [isSubmitting, setIsSubmitting] = useState(false); 
 
   useEffect(() => {
     const userData = localStorage.getItem("user");
@@ -31,24 +34,59 @@ const Page = () => {
       } else {
         setIsAuthorized(false);
       }
-    } catch (error) {
+    } catch {
       setIsAuthorized(false);
     }
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log({
-      title,
-      twitterLink,
-      file,
-      category,
-      section,
-      content: editorContent,
-    });
+    const userData = localStorage.getItem("user");
+    if (!userData) {
+      alert("You must be logged in to post an article");
+      return;
+    }
 
-    alert("Form submitted! Check console for data.");
+    const user = JSON.parse(userData);
+
+    setIsSubmitting(true);
+
+    const toBase64 = (file: File) =>
+      new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = reject;
+      });
+
+    const imageUrl = file ? await toBase64(file) : "";    
+
+    try {
+      const res = await fetch(`${baseUrl}/article/create`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title,
+          content: editorContent,
+          badge: section,
+          category,
+          author: user.id,
+          twitterLink,
+          imageUrl,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Failed to create article");
+
+      alert("Posted successfully!");
+      router.push("/");
+    } catch (error) {
+      console.error(error);
+      alert("Error posting article");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Loading state while checking role
@@ -60,7 +98,7 @@ const Page = () => {
     );
   }
 
-  // If unauthorized, show message or redirect
+  // If unauthorized
   if (!isAuthorized) {
     return (
       <div className="flex flex-col items-center justify-center h-screen text-center">
@@ -78,10 +116,12 @@ const Page = () => {
     );
   }
 
+
+
   return (
     <form
       onSubmit={handleSubmit}
-      className="min-h-screen w-full my-[4rem] md:px-[10rem] flex flex-col gap-6 px-4"
+      className={`min-h-screen w-full my-[4rem] md:px-[10rem] flex flex-col gap-6 px-4 ${isSubmitting && "opacity-20 animate-pulse"}`}
     >
       <h1 className="text-3xl font-bold text-gray-800 mb-4">დაწერე სტატია</h1>
 
@@ -91,6 +131,7 @@ const Page = () => {
           Featured Image
         </label>
         <input
+        required
           type="file"
           onChange={(e) => setFile(e.target.files?.[0] || null)}
           className="block w-full text-sm text-gray-500
@@ -102,7 +143,7 @@ const Page = () => {
         />
       </div>
 
-      {/* Category Dropdown */}
+      {/* Category */}
       <div className="space-y-2">
         <label className="block text-sm font-medium text-gray-700">
           კატეგორია
@@ -121,7 +162,7 @@ const Page = () => {
         </select>
       </div>
 
-      {/* Section Dropdown */}
+      {/* Section */}
       <div className="space-y-2">
         <label className="block text-sm font-medium text-gray-700">
           სექცია
@@ -179,12 +220,14 @@ const Page = () => {
       {/* Submit Button */}
       <button
         type="submit"
-        className="inline-flex cursor-pointer justify-center rounded-md border border-transparent 
+        disabled={isSubmitting}
+        className={`inline-flex cursor-pointer justify-center rounded-md border border-transparent 
           bg-violet-600 py-2 px-4 text-sm font-medium text-white shadow-sm 
           hover:bg-violet-700 focus:outline-none focus:ring-2 
-          focus:ring-violet-500 focus:ring-offset-2 self-end mt-4"
+          focus:ring-violet-500 focus:ring-offset-2 self-end mt-4
+          ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
       >
-        Publish Post
+        {isSubmitting ? "Publishing..." : "Publish Post"}
       </button>
     </form>
   );

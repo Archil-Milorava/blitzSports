@@ -21,6 +21,7 @@ app.use(
   })
 );
 
+app.use(express.json({ limit: "10mb" }));
 app.use(express.json());
 
 app.use("/api/v1/auth", googleAuthRoute);

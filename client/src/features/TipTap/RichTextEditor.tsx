@@ -12,7 +12,7 @@ interface RichTextEditorProps {
 const RichTextEditor = ({ onContentChange }: RichTextEditorProps) => {
   const editor = useEditor({
     extensions: [StarterKit],
-    content: "<p>Start writing your post here...</p>",
+    content: "",
     onUpdate: ({ editor }) => {
       onContentChange(editor.getHTML());
     },
