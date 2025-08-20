@@ -1,7 +1,7 @@
 import express from "express";
 import {
   createArticle,
-  deleteAll,
+  deleteArticle,
   getArticle,
   getArticlesByCategory,
   getLandingHistories,
@@ -18,10 +18,10 @@ articleRoute.get("/landing/histories", getLandingHistories);
 articleRoute.get("/news", getPaginatedNews);
 articleRoute.get("/histories", getPaginatedHistories);
 articleRoute.get("/category/:category", getArticlesByCategory);
-articleRoute.delete("/delete", deleteAll);
+articleRoute.delete("/delete/:id", deleteArticle);
 
 articleRoute.post("/create", createArticle);
-articleRoute.patch("/update/:id", updateArticle);
+articleRoute.put("/update/:id", updateArticle);
 articleRoute.get("/:id", getArticle);
 
 export default articleRoute;

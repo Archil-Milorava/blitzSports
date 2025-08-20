@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import cloudinary from "../../config/cloudinary.js";
 
-
 import Article from "../../models/articleModel.js";
 import User from "../../models/userModel.js";
 
@@ -177,30 +176,63 @@ export const createArticle = async (req, res) => {
 export const updateArticle = async (req, res) => {
   try {
     const articleId = req.params.id;
-    const updates = req.body;
+    const { title, content, badge, category, twitterLink, imageUrl } = req.body;
 
-    const updatedArticle = await Article.findByIdAndUpdate(articleId, updates, {
-      new: true,
-    });
-
-    if (!updatedArticle) {
+    const article = await Article.findById(articleId);
+    if (!article) {
       return res.status(404).json({ message: "Article not found" });
     }
 
-    res.json(updatedArticle);
+    let updatedImageUrl = article.imageUrl;
+
+    if (imageUrl && imageUrl !== article.imageUrl) {
+      try {
+        if (article.imageUrl) {
+          const publicId = article.imageUrl
+            .split("/")
+            .slice(-2)
+            .join("/")
+            .split(".")[0];
+          await cloudinary.uploader.destroy(publicId);
+        }
+        const uploadResponse = await cloudinary.uploader.upload(imageUrl, {
+          folder: "articles",
+        });
+        updatedImageUrl = uploadResponse.secure_url;
+      } catch (uploadErr) {
+        console.error("Cloudinary upload error:", uploadErr);
+        return res.status(500).json({ message: "Image upload failed" });
+      }
+    }
+    article.title = title || article.title;
+    article.content = content || article.content;
+    article.badge = badge || article.badge;
+    article.category = category || article.category;
+    article.twitterLink = twitterLink || article.twitterLink;
+    article.imageUrl = updatedImageUrl;
+
+    const updatedArticle = await article.save();
+
+    res.json({ message: "Article updated", article: updatedArticle });
   } catch (err) {
     console.error("Error updating article:", err);
     res.status(500).json({ message: "Server error" });
   }
 };
 
-
-export const deleteAll =async (req, res) => {
+export const deleteArticle = async (req, res) => {
   try {
-    await Article.deleteMany()
-    res.send("deleted")
+    const { id } = req.params;
+
+    const article = await Article.findByIdAndDelete(id);
+
+    if (!article) {
+      return res.status(404).json({ message: "Article not found" });
+    }
+
+    return res.status(200).json({ message: "Article deleted successfully" });
   } catch (error) {
-    console.log(error);
-    
+    return res.status(500).json({ message: "Server error", error: error.message });
   }
-}
+};
+

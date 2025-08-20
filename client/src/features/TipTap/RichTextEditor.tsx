@@ -4,20 +4,28 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import MenuBar from "./MenuBar";
 import "./tiptap.css";
+import { useEffect } from "react";
 
 interface RichTextEditorProps {
+  currentContent?: string;
   onContentChange: (content: string) => void;
 }
 
-const RichTextEditor = ({ onContentChange }: RichTextEditorProps) => {
+const RichTextEditor = ({ onContentChange, currentContent }: RichTextEditorProps) => {
   const editor = useEditor({
     extensions: [StarterKit],
-    content: "",
+    content: currentContent || "",
     onUpdate: ({ editor }) => {
       onContentChange(editor.getHTML());
     },
-    immediatelyRender: false,
+    immediatelyRender: false
   });
+
+  useEffect(() => {
+    if (editor && currentContent !== editor.getHTML()) {
+      editor.commands.setContent(currentContent || ""); 
+    }
+  }, [currentContent, editor]);
 
   return (
     <div className="border rounded-lg overflow-hidden shadow-sm">
