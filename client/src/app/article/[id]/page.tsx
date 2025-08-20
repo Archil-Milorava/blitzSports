@@ -105,7 +105,7 @@ export default async function ArticlePage({ params }: PageProps) {
       {/* image */}
       <div className="mb-8 rounded-xl max-h-[40rem] overflow-hidden shadow-lg">
         <img
-          src={article.imageUrl || Logo}
+          src={article.imageUrl || Logo.src}
           alt={article.title}
           className="w-full h-auto object-cover"
         />
