@@ -114,6 +114,7 @@ export default async function ArticlePage({ params }: PageProps) {
       <EditButton articleId={article._id} />
       <DeleteButton articleId={article._id} />
       </div>
+  
       <div>
         <div className="flex items-center gap-2 pb-4">
           <p className="text-sm text-gray-500">{publishDate}</p>

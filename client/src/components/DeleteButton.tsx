@@ -2,6 +2,7 @@
 
 import { getApiBaseUrl } from "@/utils/getBaseUrl";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 type DeleteButtonProps = {
   articleId: string;
@@ -10,7 +11,23 @@ type DeleteButtonProps = {
 export default function DeleteButton({ articleId }: DeleteButtonProps) {
   const router = useRouter();
     const baseUrl = getApiBaseUrl();
+
+     const [canEdit, setCanEdit] = useState(false);
+      useEffect(() => {
+        const userData = localStorage.getItem("user");
+        if (!userData) return;
+        try {
+          const user = JSON.parse(userData);
+          const roles: string[] = user.roles || [];
+          if (roles.includes("admin") || roles.includes("author")) {
+            setCanEdit(true);
+          }
+        } catch (error) {
+          setCanEdit(false);
+        }
+      }, []);
   
+
 
   const handleDelete = async () => {
     const confirmed = confirm("Are you sure you want to delete this article?");
@@ -32,6 +49,8 @@ export default function DeleteButton({ articleId }: DeleteButtonProps) {
       alert("Something went wrong.");
     }
   };
+
+if (!canEdit) return null;
 
   return (
     <button
