@@ -119,7 +119,7 @@ export default async function ArticlePage({ params }: PageProps) {
         <div className="flex items-center gap-2 pb-4">
           <p className="text-sm text-gray-500">{publishDate}</p>
           <p className="text-xs text-white bg-secondary px-4 py-1 rounded-full">
-            {article.category}
+            {article.category.toUpperCase()}
           </p>
         </div>
       </div>

@@ -41,7 +41,7 @@ const NewsCard = ({ news }: NewsCardProps) => {
         {/* Floating category chip */}
         <div className="absolute top-4 left-4">
           <span className="inline-flex items-center px-3 py-1.5 rounded-full  text-xs  bg-secondary text-white tracking-wider backdrop-blur-sm ">
-            {category}
+            {category.toUpperCase()}
           </span>
         </div>
       </div>

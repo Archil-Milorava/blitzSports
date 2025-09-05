@@ -36,7 +36,7 @@ const HistoryCard = ({ history }: NewsCardProps) => {
           loading="lazy"
         />
         <span className="absolute top-2 left-2 bg-primary text-black tracking-wider text-xs px-2 py-1 rounded font-semibold capitalize z-10">
-          {category.toLowerCase()}
+          {category.toUpperCase()}
         </span>
       </div>
 
