@@ -13,15 +13,15 @@ const Footer = () => {
           <div className="pt-4">
             <h3 className="text-lg font-semibold mb-3">გამოგვყევი</h3>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-300 hover:text-primary transition-colors">
+              <a href="https://www.facebook.com/profile.php?id=61579099388081" target='_blank' className="text-gray-300 hover:text-primary transition-colors">
                 <FaFacebook className="text-2xl" />
               </a>
-              <a href="#" className="text-gray-300 hover:text-primary transition-colors">
+              {/* <a href="#" className="text-gray-300 hover:text-primary transition-colors">
                 <FaInstagram className="text-2xl" />
-              </a>
-              <a href="#" className="text-gray-300 hover:text-primary transition-colors">
+              </a> */}
+              {/* <a href="#" className="text-gray-300 hover:text-primary transition-colors">
                 <FaTiktok className="text-2xl" />
-              </a>
+              </a> */}
             </div>
           </div>
         </div>
@@ -39,7 +39,7 @@ const Footer = () => {
         </div>
 
         {/* Useful Links */}
-        <div className="space-y-4">
+        {/* <div className="space-y-4">
           <h3 className="text-lg font-semibold">სასარგებლო ბმულები</h3>
           <ul className="space-y-2">
             <li><a href="#" className="text-gray-300 hover:text-primary transition-colors">ჩვენ შესახებ</a></li>
@@ -48,17 +48,17 @@ const Footer = () => {
             <li><a href="#" className="text-gray-300 hover:text-primary transition-colors">პარტნიორები</a></li>
             <li><a href="#" className="text-gray-300 hover:text-primary transition-colors">ჟურნალისტებისთვის</a></li>
           </ul>
-        </div>
+        </div> */}
       </div>
 
       {/* Bottom Copyright */}
       <div className="border-t border-gray-800 pt-6 text-center text-gray-400">
         <p>© 2024-2025 ყველა უფლება დაცულია | BLITZ Sports Media</p>
-        <div className="flex justify-center space-x-4 mt-2 text-sm">
+        {/* <div className="flex justify-center space-x-4 mt-2 text-sm">
           <a href="#" className="hover:text-primary transition-colors">წესები და პირობები</a>
           <a href="#" className="hover:text-primary transition-colors">კონფიდენციალურობის პოლიტიკა</a>
           <a href="#" className="hover:text-primary transition-colors">ფაილი Cookie-ები</a>
-        </div>
+        </div> */}
       </div>
     </footer>
   );
