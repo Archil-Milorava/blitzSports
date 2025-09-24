@@ -27,24 +27,24 @@ const NewsCard = ({ news }: NewsCardProps) => {
       className="group relative bg-[#FFFCF1] rounded-sm overflow-hidden shadow-xs hover:shadow-sm transition-all duration-300 h-full flex flex-col transform hover:-translate-y-1 cursor-pointer"
     >
       {/* Image with gradient overlay */}
-      <div className="relative w-full h-56 aspect-video overflow-hidden">
-        <img
-          src={
-            imageUrl || "https://via.placeholder.com/800x450?text=Sports+News"
-          }
-          alt={title}
-          className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110"
-          loading="lazy"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
+<div className="relative w-full aspect-video overflow-hidden">
+  <img
+    src={
+      imageUrl || "https://via.placeholder.com/800x450?text=Sports+News"
+    }
+    alt={title}
+    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+    loading="lazy"
+  />
+  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
 
-        {/* Floating category chip */}
-        <div className="absolute top-4 left-4">
-          <span className="inline-flex items-center px-3 py-1.5 rounded-full  text-xs  bg-secondary text-white tracking-wider backdrop-blur-sm ">
-            {category.toUpperCase()}
-          </span>
-        </div>
-      </div>
+  {/* Floating category chip */}
+  <div className="absolute top-4 left-4">
+    <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs bg-secondary text-white tracking-wider backdrop-blur-sm">
+      {category.toUpperCase()}
+    </span>
+  </div>
+</div>
 
       {/* Content section */}
       <div className="p-5 flex flex-col flex-grow">

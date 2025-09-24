@@ -53,7 +53,7 @@ const NavbarMain = () => {
 
       {/* Desktop Avatar */}
       <div className="hidden md:block">
-        <Link href={user ? "/profile" : "/auth"}>
+        {/* <Link href={user ? "/profile" : "/auth"}>
           {user ? (
             <img
               src={avatar}
@@ -63,13 +63,13 @@ const NavbarMain = () => {
           ) : (
             <User className="text-white hover:opacity-90" />
           )}
-        </Link>
+        </Link> */}
       </div>
 
       {/* Mobile Burger Button */}
       <div className="md:hidden flex items-center gap-3">
         {/* Avatar for Mobile */}
-        <Link href={user ? "/profile" : "/auth"}>
+        {/* <Link href={user ? "/profile" : "/auth"}>
           {user ? (
             <img
               src={avatar}
@@ -79,7 +79,7 @@ const NavbarMain = () => {
           ) : (
             <User className="text-primary hover:opacity-90" />
           )}
-        </Link>
+        </Link> */}
 
         {/* Burger */}
         <button
