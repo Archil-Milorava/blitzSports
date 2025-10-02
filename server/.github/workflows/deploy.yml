@@ -20,9 +20,12 @@ jobs:
 
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-            cd /absolute/path/to/blitzSports/server
-            git pull origin master
-            npm install --production
-            pm2 restart myapp
-          EOF
+           ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+             cd /root/blitzSports/server
+             pwd
+             git status
+             git pull origin main
+             npm install
+             pm2 restart myapp || pm2 start server.js --name myapp
+           EOF
+
