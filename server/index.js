@@ -30,7 +30,7 @@ app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/article", articleRoute);
 
 app.use("/api/test/ci", (req, res) => {
-  res.send("test of ci/cd 2")
+  res.send("test of ci/cd 4")
 })
 
 app.use((req, res) => {
