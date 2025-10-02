@@ -29,6 +29,10 @@ app.use("/api/v1/auth", googleAuthRoute);
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/article", articleRoute);
 
+app.use("/api/test/ci", () => {
+  res.send("test of ci/cd")
+})
+
 app.use((req, res) => {
   res.status(400).json({
     message: `Bad Request: Cannot ${req.method} ${req.originalUrl}`,
