@@ -5,6 +5,7 @@ import "./globals.css";
 import NavbarMain from "@/features/navbar/NavbarMain";
 import Footer from "@/features/footer/Footer";
 import { Analytics } from "@vercel/analytics/next";
+import { Providers } from "@/state/Providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,10 +37,16 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col bg-[#D9D9D9]`}
         >
+          <Providers>
+            <>
           <Analytics />
           <NavbarMain />
+          <main className="">
           {children}
+          </main>
           <Footer />
+            </>
+          </Providers>
         </body>
       </GoogleOAuthProvider>
     </html>

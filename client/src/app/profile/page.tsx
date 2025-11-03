@@ -1,33 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { userAtom } from "@/state/UserState";
+import { useAtom } from "jotai";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-interface User {
-  id: string;
-  fullName: string;
-  nickName: string;
-  avatar: string;
-  roles: string[];
-  createdAt: string;
-}
 
 const ProfilePage = () => {
-  const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
+  const [user, setUser] = useAtom(userAtom)
 
-  useEffect(() => {
-    const userData = localStorage.getItem("user");
-    if (userData) {
-      setUser(JSON.parse(userData));
-    } else {
-      router.push("/"); 
-    }
-  }, [router]);
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
+    setUser(null)
     router.push("/");
   };
 
@@ -46,11 +32,14 @@ const ProfilePage = () => {
     <main className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="bg-white rounded-xl shadow-lg p-6 max-w-md w-full text-center">
         {/* Avatar */}
-        <img
-          src={user.avatar}
-          alt={user.fullName}
-          className="w-24 h-24 rounded-full mx-auto border-4 border-violet-500 shadow-sm"
-        />
+  <Image
+    src={user.avatar || "/avatar.png"}
+    alt={user.fullName}
+    width={96}
+    height={96}
+    className="rounded-full mx-auto border-4 border-violet-500 shadow-sm"
+  />
+
 
         {/* User Info */}
         <h1 className="text-2xl font-bold mt-4">{user.fullName}</h1>
@@ -65,12 +54,21 @@ const ProfilePage = () => {
         {/* Buttons */}
         <div className="mt-6 flex flex-col gap-3">
           {isAuthorOrAdmin && (
+            <div className="w-full h-auto flex flex-col gap-2">
+
             <Link
               href="/write"
               className="bg-violet-600 hover:bg-violet-700 text-white py-2 px-4 rounded-md transition"
-            >
+              >
               Make a Post
             </Link>
+            <Link
+              href="/cardgenerator"
+              className="bg-emerald-500 hover:bg-emerald-700 text-white py-2 px-4 rounded-md transition"
+              >
+              Make a Card
+            </Link>
+              </div>
           )}
 
           <button

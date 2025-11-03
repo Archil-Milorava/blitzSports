@@ -1,35 +1,30 @@
 "use client";
 
+import { userAtom } from "@/state/UserState";
+import { useAtom } from "jotai";
 import { User } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 
 const NavbarMain = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [user, setUser] = useState<{ avatar?: string } | null>(null);
-  const [mounted, setMounted] = useState(false);
+  const [user] = useAtom(userAtom)
 
-  useEffect(() => {
-    setMounted(true); 
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
 
-  if (!mounted) return null; 
-  const avatar = user?.avatar;
+
+
+  const avatar = user?.avatar;  
 
   const navItems = [
     { href: "/football", label: "ფეხბურთი" },
-    { href: "/basketball", label: "კალათბურთი" },
     { href: "/mma", label: "MMA" },
     { href: "/f1", label: "ფორმულა 1" },
     { href: "/other", label: "სხვა..." },
   ];
 
   return (
-    <header className="bg-accent w-full h-14 fixed top-0 left-0 flex items-center justify-between px-4 md:px-[11rem] z-50">
+    <header className="bg-accent w-full h-14 sticky top-0 left-0 flex items-center justify-between px-4 md:px-[11rem] z-50">
       {/* Logo */}
       <Link
         href="/"
@@ -53,33 +48,37 @@ const NavbarMain = () => {
 
       {/* Desktop Avatar */}
       <div className="hidden md:block">
-        {/* <Link href={user ? "/profile" : "/auth"}>
+        <Link href={user ? "/profile" : "/auth"}>
           {user ? (
-            <img
-              src={avatar}
+            <Image
+              src={avatar || "/avatar.png"}
               alt="avatar"
-              className="w-8 h-8 overflow-hidden rounded-full"
+              width={96}
+              height={96}
+              className="w-8 h-8 overflow-hidden rounded-full hover:opacity-80 transition-all "
             />
           ) : (
-            <User className="text-white hover:opacity-90" />
+            <User className="text-white hover:opacity-90" /> 
           )}
-        </Link> */}
+        </Link>
       </div>
 
       {/* Mobile Burger Button */}
       <div className="md:hidden flex items-center gap-3">
         {/* Avatar for Mobile */}
-        {/* <Link href={user ? "/profile" : "/auth"}>
+        <Link href={user ? "/profile" : "/auth"}>
           {user ? (
-            <img
-              src={avatar}
+            <Image
+              src={avatar || "/avatar.png"}
               alt="avatar"
+              width={96}
+              height={96}
               className="w-8 h-8 overflow-hidden rounded-full"
             />
           ) : (
             <User className="text-primary hover:opacity-90" />
           )}
-        </Link> */}
+        </Link>
 
         {/* Burger */}
         <button

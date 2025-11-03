@@ -5,10 +5,13 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import type { CredentialResponse } from "@react-oauth/google";
 import { getApiBaseUrl } from "@/utils/getBaseUrl";
+import { useAtom } from "jotai";
+import { userAtom } from "@/state/UserState";
 
 const Page = () => {
   const BASE_URL = getApiBaseUrl();
   const router = useRouter();
+  const [, setUser] = useAtom(userAtom)
 
   const handleSuccess = async (response: CredentialResponse) => {
     const token = response.credential;
@@ -18,19 +21,14 @@ const Page = () => {
         token,
       });
       const user = res.data;
-      localStorage.setItem("user", JSON.stringify(user));
+      setUser(user)
       router.push("/");
     } catch (err) {
       console.error("Auth error:", err);
     }
   };
 
-  useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (user) {
-      router.push("/");
-    }
-  }, []);
+
 
   return (
     <div className="h-screen w-screen flex items-center justify-center">
