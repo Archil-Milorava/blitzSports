@@ -39,7 +39,7 @@ const Page = () => {
     link.click()
   }
 
-  const frames = ['/frames/frame-1.png', '/frames/frame-2.png', '/frames/frame-3.png', '/frames/frame-4.png', '/frames/frame-5.png', '/frames/frame-8.png']
+  const frames = ['/frames/frame-1.png', '/frames/frame-2.png', '/frames/frame-3.png', '/frames/frame-4.png',  '/frames/frame-5.png', '/frames/frame-6.png', '/frames/frame-7.png', '/frames/frame-8.png']
   const presetColors = ['#DCF303', '#67206E', '#FFFFFF', '#000000']
 
   return (
@@ -111,7 +111,7 @@ const Page = () => {
               {/* Caption */}
               {caption && (
                 <p
-                  className="absolute w-full bottom-8 text-center px-4 z-10"
+                  className="absolute w-full bottom-8 text-center px-4 z-10 uppercase"
                   style={{
                     color: textColor,
                     fontWeight: isBold ? 'bold' : 'normal',
