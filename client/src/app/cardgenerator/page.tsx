@@ -55,7 +55,7 @@ const Page = () => {
       width={140}
       height={140}
       onClick={() => setSelectedFrame(src)}
-      className={`flex-shrink-0 cursor-pointer border-2 rounded-md transition-all ${
+      className={`flex-shrink-0 cursor-pointer border-2  transition-all ${
         selectedFrame === src
           ? 'border-emerald-400 shadow-lg scale-105'
           : 'border-transparent'
@@ -70,7 +70,7 @@ const Page = () => {
         <input type="file" accept="image/*" onChange={handleUpload} className="hidden" id="upload" />
         <label
           htmlFor="upload"
-          className="px-6 py-3 bg-emerald-500 text-white rounded-lg cursor-pointer hover:bg-emerald-600 transition-all duration-300 text-sm sm:text-base"
+          className="px-6 py-3 bg-emerald-500 text-white  cursor-pointer hover:bg-emerald-600 transition-all duration-300 text-sm sm:text-base"
         >
           Upload Image
         </label>
@@ -78,7 +78,7 @@ const Page = () => {
         {/* PREVIEW */}
         <div
           id="preview"
-          className="relative bg-white shadow-xl overflow-hidden rounded-lg"
+          className="relative bg-white shadow-xl overflow-hidden "
           style={{
             width: '90vw',
             maxWidth: '400px',
