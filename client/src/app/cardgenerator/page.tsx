@@ -62,40 +62,33 @@ const Page = () => {
   ]
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-gradient-to-br from-[#f8fafc] via-[#e0f7f4] to-[#d7c9f9] text-gray-800 overflow-hidden">
+    <div className="md:max-h-screen flex flex-col md:flex-row overflow-hidden">
       {/* Left Panel - Frames */}
-      <div className="w-full md:w-[20%] h-auto md:h-screen overflow-y-auto flex md:flex-col flex-wrap items-center justify-center gap-4 py-4 px-2 bg-white/40 backdrop-blur-md shadow-inner">
+      <div className="py-4 md:w-[20%] flex md:flex-col md:items-center gap-3 md:py-4 overflow-y-scroll
+      bg-gradient-to-br from-[#F4FCFB] via-[#EEF4FA] to-[#ECEAFB]">
         {frames.map((src, i) => (
           <NextImage
             key={i}
             src={src}
             alt={`Frame ${i}`}
-            width={120}
-            height={120}
+            width={100}
+            height={100}
             onClick={() => setSelectedFrame(src)}
-            className={`rounded-lg cursor-pointer border-2 transition-all duration-300 hover:scale-105 ${
-              selectedFrame === src
-                ? 'border-emerald-400 shadow-lg scale-105'
-                : 'border-transparent hover:border-gray-300'
-            }`}
+            className={`rounded cursor-pointer border-2 transition ${
+              selectedFrame === src ? 'border-green-500 scale-110' : 'border-transparent'
+            } hover:border-gray-400`}
           />
         ))}
       </div>
 
       {/* Middle - Preview */}
-      <div className="w-full md:w-[35%] flex items-center justify-center bg-gradient-to-br from-[#edf2f7]/50 to-[#dbeafe]/50 p-4">
+      <div className="w-full md:w-[40%] flex items-center justify-center p-4 ">
         <div
           id="preview"
-          className="relative bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200"
-          style={{
-            width: '90vw',
-            maxWidth: '360px',
-            aspectRatio: '4/5',
-          }}
+          className="relative w-[90vw] max-w-[360px] aspect-[4/5]"
         >
           {uploadedImg ? (
             <>
-              {/* Uploaded Image */}
               <div className="absolute inset-0">
                 <img
                   src={uploadedImg}
@@ -104,7 +97,6 @@ const Page = () => {
                 />
               </div>
 
-              {/* Frame */}
               {selectedFrame && (
                 <div className="absolute inset-0">
                   <img
@@ -115,16 +107,15 @@ const Page = () => {
                 </div>
               )}
 
-              {/* Caption */}
               {caption && (
                 <p
-                  className="absolute w-full bottom-6 text-center px-4 z-10"
+                  className="absolute w-full bottom-5 text-center px-2 z-10 break-words"
                   style={{
                     color: textColor,
                     fontWeight: isBold ? 'bold' : 'normal',
                     fontSize: fontSize,
-                    textShadow: '0 0 4px rgba(0,0,0,0.3)',
-                    lineHeight: 1.2,
+                    lineHeight: 1.25,
+                    textShadow: '0 0 3px rgba(0,0,0,0.2)',
                   }}
                 >
                   {caption}
@@ -132,17 +123,19 @@ const Page = () => {
               )}
             </>
           ) : (
-            <div className="flex flex-col items-center justify-center h-full text-gray-400">
-              <p className="text-sm md:text-base">Upload an image to start editing</p>
+            <div className="flex flex-col items-center justify-center h-full text-gray-500 text-sm">
+              Upload an image to start editing
             </div>
           )}
         </div>
       </div>
 
       {/* Right Panel - Controls */}
-      <div className="w-full md:w-[45%] p-6 flex flex-col gap-6 overflow-y-auto bg-white/50 backdrop-blur-md">
-        {/* Upload + Export */}
-        <div className="flex flex-wrap items-center justify-between gap-3">
+      <div className="w-full md:w-[45%] p-4 flex flex-col gap-4 overflow-y-auto shadow-xl 
+      bg-gradient-to-br from-[#EDF5F8] to-[#DDEAF8]">
+       
+
+  <div className="flex flex-wrap items-center justify-between gap-3">
           <input type="file" accept="image/*" onChange={handleUpload} className="hidden" id="upload" />
           <label
             htmlFor="upload"
@@ -164,7 +157,6 @@ const Page = () => {
 
         {/* Caption */}
         <div>
-          <label className="block font-medium mb-2 text-sm">Caption</label>
           <textarea
             placeholder="Write your caption here..."
             value={caption}
@@ -177,7 +169,6 @@ const Page = () => {
         <div className="flex flex-col gap-6">
           {/* Color Picker */}
           <div>
-            <label className="font-medium text-sm mb-2 block">Text Color</label>
             <div className="flex items-center gap-3 flex-wrap">
               <input
                 type="color"
