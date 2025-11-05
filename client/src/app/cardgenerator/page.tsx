@@ -1,7 +1,7 @@
 'use client'
-import html2canvas from 'html2canvas'
 import React, { useState } from 'react'
 import NextImage from 'next/image'
+import html2canvas from 'html2canvas'
 
 const Page = () => {
   const [uploadedImg, setUploadedImg] = useState<string | null>(null)
@@ -9,7 +9,7 @@ const Page = () => {
   const [caption, setCaption] = useState<string>('')
   const [textColor, setTextColor] = useState<string>('#000000')
   const [isBold, setIsBold] = useState<boolean>(false)
-  const [fontSize, setFontSize] = useState<'small' | 'medium' | 'large'>('medium')
+  const [fontSize, setFontSize] = useState<string>('20px')
 
   const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -23,8 +23,7 @@ const Page = () => {
     const preview = document.getElementById('preview')
     if (!preview) return
 
-    const scale = window.devicePixelRatio * 2 
-
+    const scale = window.devicePixelRatio * 2
     const canvas = await html2canvas(preview, {
       backgroundColor: null,
       scale,
@@ -39,57 +38,65 @@ const Page = () => {
     link.click()
   }
 
-  const frames = ['/frames/frame-1.png', '/frames/frame-2.png', '/frames/frame-3.png', '/frames/frame-4.png',  '/frames/frame-5.png', '/frames/frame-6.png', '/frames/frame-7.png', '/frames/frame-8.png']
+  const frames = [
+    '/frames/frame-1.png',
+    '/frames/frame-2.png',
+    '/frames/frame-3.png',
+    '/frames/frame-4.png',
+    '/frames/frame-5.png',
+    '/frames/frame-6.png',
+    '/frames/frame-7.png',
+    '/frames/frame-8.png',
+  ]
+
   const presetColors = ['#DCF303', '#67206E', '#FFFFFF', '#000000']
 
+  const fontSizeOptions = [
+    { label: 'XS', value: '12px' },
+    { label: 'Small', value: '16px' },
+    { label: 'Medium', value: '20px' },
+    { label: 'Large', value: '24px' },
+    { label: 'XL', value: '28px' },
+    { label: 'XXL', value: '32px' },
+    { label: 'XXXL', value: '36px' },
+  ]
+
   return (
-    <div className="min-h-screen w-full flex flex-col md:flex-row overflow-hidden">
-      {/* LEFT: Frames */}
-<div className="md:w-[20%] w-full flex md:flex-col flex-row md:items-center items-start gap-4 p-4
-                md:pt-4 md:overflow-y-auto overflow-x-auto">
-  {frames.map((src, i) => (
-    <NextImage
-      key={i}
-      src={src}
-      alt={`Frame ${i}`}
-      width={140}
-      height={140}
-      onClick={() => setSelectedFrame(src)}
-      className={`flex-shrink-0 cursor-pointer border-2  transition-all ${
-        selectedFrame === src
-          ? 'border-emerald-400 shadow-lg scale-105'
-          : 'border-transparent'
-      }`}
-    />
-  ))}
-</div>
+    <div className="min-h-screen flex flex-col md:flex-row bg-gradient-to-br from-[#f8fafc] via-[#e0f7f4] to-[#d7c9f9] text-gray-800 overflow-hidden">
+      {/* Left Panel - Frames */}
+      <div className="w-full md:w-[20%] h-auto md:h-screen overflow-y-auto flex md:flex-col flex-wrap items-center justify-center gap-4 py-4 px-2 bg-white/40 backdrop-blur-md shadow-inner">
+        {frames.map((src, i) => (
+          <NextImage
+            key={i}
+            src={src}
+            alt={`Frame ${i}`}
+            width={120}
+            height={120}
+            onClick={() => setSelectedFrame(src)}
+            className={`rounded-lg cursor-pointer border-2 transition-all duration-300 hover:scale-105 ${
+              selectedFrame === src
+                ? 'border-emerald-400 shadow-lg scale-105'
+                : 'border-transparent hover:border-gray-300'
+            }`}
+          />
+        ))}
+      </div>
 
-      {/* RIGHT: Editor */}
-      <div className="flex-1 bg-gray-200 flex flex-col items-center justify-start gap-6 relative p-4 md:p-4">
-        {/* Upload */}
-        <input type="file" accept="image/*" onChange={handleUpload} className="hidden" id="upload" />
-        <label
-          htmlFor="upload"
-          className="px-6 py-3 bg-emerald-500 text-white  cursor-pointer hover:bg-emerald-600 transition-all duration-300 text-sm sm:text-base"
-        >
-          Upload Image
-        </label>
-
-        {/* PREVIEW */}
+      {/* Middle - Preview */}
+      <div className="w-full md:w-[35%] flex items-center justify-center bg-gradient-to-br from-[#edf2f7]/50 to-[#dbeafe]/50 p-4">
         <div
           id="preview"
-          className="relative bg-white shadow-xl overflow-hidden "
+          className="relative bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200"
           style={{
             width: '90vw',
-            maxWidth: '400px',
-            aspectRatio: '4/5', 
-            contain: 'layout paint',
+            maxWidth: '360px',
+            aspectRatio: '4/5',
           }}
         >
-          {uploadedImg && (
+          {uploadedImg ? (
             <>
-              {/* Base image */}
-              <div className="absolute inset-0 overflow-hidden">
+              {/* Uploaded Image */}
+              <div className="absolute inset-0">
                 <img
                   src={uploadedImg}
                   alt="Uploaded"
@@ -99,7 +106,7 @@ const Page = () => {
 
               {/* Frame */}
               {selectedFrame && (
-                <div className="absolute inset-0 overflow-hidden">
+                <div className="absolute inset-0">
                   <img
                     src={selectedFrame}
                     alt="Frame"
@@ -111,90 +118,117 @@ const Page = () => {
               {/* Caption */}
               {caption && (
                 <p
-                  className="absolute w-full bottom-8 text-center px-4 z-10 uppercase"
+                  className="absolute w-full bottom-6 text-center px-4 z-10"
                   style={{
                     color: textColor,
                     fontWeight: isBold ? 'bold' : 'normal',
-                    fontSize:
-                      fontSize === 'small'
-                        ? '12px'
-                        : fontSize === 'large'
-                        ? '26px'
-                        : '20px',
+                    fontSize: fontSize,
                     textShadow: '0 0 4px rgba(0,0,0,0.3)',
-                          lineHeight: 1.2, // <-- add this
+                    lineHeight: 1.2,
                   }}
                 >
                   {caption}
                 </p>
               )}
             </>
+          ) : (
+            <div className="flex flex-col items-center justify-center h-full text-gray-400">
+              <p className="text-sm md:text-base">Upload an image to start editing</p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Right Panel - Controls */}
+      <div className="w-full md:w-[45%] p-6 flex flex-col gap-6 overflow-y-auto bg-white/50 backdrop-blur-md">
+        {/* Upload + Export */}
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <input type="file" accept="image/*" onChange={handleUpload} className="hidden" id="upload" />
+          <label
+            htmlFor="upload"
+            className="px-5 py-3 bg-gradient-to-r from-emerald-400 to-teal-500 text-white cursor-pointer hover:shadow-md 
+                      transition-all rounded-lg text-sm font-medium"
+          >
+            Upload Image
+          </label>
+
+          {uploadedImg && (
+            <button
+              onClick={exportImage}
+              className="px-5 py-3 bg-gradient-to-r from-indigo-400 to-purple-500 text-white rounded-lg hover:shadow-md transition-all text-sm font-medium"
+            >
+              Export Final Image
+            </button>
           )}
         </div>
 
-        {/* TEXT INPUT */}
-        <textarea
-          placeholder="Write caption..."
-          value={caption}
-          onChange={(e) => setCaption(e.target.value)}
-          className="w-[90vw] max-w-[400px] h-24 p-3 border rounded-lg resize-y outline-none focus:ring-2 focus:ring-emerald-200 text-sm sm:text-base"
-        />
+        {/* Caption */}
+        <div>
+          <label className="block font-medium mb-2 text-sm">Caption</label>
+          <textarea
+            placeholder="Write your caption here..."
+            value={caption}
+            onChange={(e) => setCaption(e.target.value)}
+            className="w-full h-28 p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-300 outline-none resize-none text-sm bg-white/80"
+          />
+        </div>
 
-        {/* CONTROLS */}
-        <div className="flex flex-col items-center gap-3">
+        {/* Text Controls */}
+        <div className="flex flex-col gap-6">
           {/* Color Picker */}
-          <div className="flex flex-wrap justify-center items-center gap-3">
-            <label className="font-medium text-sm sm:text-base">Text color:</label>
-            <input
-              type="color"
-              value={textColor}
-              onChange={(e) => setTextColor(e.target.value)}
-              className="w-8 h-8 cursor-pointer"
-            />
-            <div className="flex gap-2">
-              {presetColors.map((color) => (
-                <button
-                  key={color}
-                  onClick={() => setTextColor(color)}
-                  style={{ backgroundColor: color }}
-                  className="w-8 h-8 rounded-full border border-gray-300"
-                />
-              ))}
+          <div>
+            <label className="font-medium text-sm mb-2 block">Text Color</label>
+            <div className="flex items-center gap-3 flex-wrap">
+              <input
+                type="color"
+                value={textColor}
+                onChange={(e) => setTextColor(e.target.value)}
+                className="w-10 h-10 cursor-pointer rounded border border-gray-300"
+              />
+              <div className="flex gap-2">
+                {presetColors.map((color) => (
+                  <button
+                    key={color}
+                    onClick={() => setTextColor(color)}
+                    style={{ backgroundColor: color }}
+                    className={`w-8 h-8 rounded-full border-2 ${
+                      textColor === color ? 'border-gray-800' : 'border-gray-300'
+                    } hover:scale-105 transition-all`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* Bold + Font Size */}
-          <div className="flex items-center justify-center gap-4 mt-2 flex-wrap">
+          {/* Font Controls */}
+          <div className="flex flex-wrap items-center gap-4">
             <button
               onClick={() => setIsBold((prev) => !prev)}
-              className={`px-4 py-2 rounded transition-all duration-300 cursor-pointer hover:shadow ${
-                isBold ? 'bg-emerald-400 text-white' : 'bg-white text-black'
+              className={`px-4 py-2 rounded-lg transition-all text-sm font-medium ${
+                isBold
+                  ? 'bg-emerald-500 text-white shadow-md'
+                  : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-100'
               }`}
             >
               {isBold ? 'Bold ✓' : 'Bold'}
             </button>
 
-            <select
-              value={fontSize}
-              onChange={(e) => setFontSize(e.target.value as 'small' | 'medium' | 'large')}
-              className="border rounded px-3 py-2 text-sm sm:text-base"
-            >
-              <option value="small">Small</option>
-              <option value="medium">Medium</option>
-              <option value="large">Large</option>
-            </select>
+            <div className="flex items-center gap-2">
+              <label className="font-medium text-sm whitespace-nowrap">Font Size</label>
+              <select
+                value={fontSize}
+                onChange={(e) => setFontSize(e.target.value)}
+                className="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white/80 focus:ring-2 focus:ring-emerald-300 outline-none"
+              >
+                {fontSizeOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
-
-        {/* Export Button */}
-        {uploadedImg && (
-          <button
-            onClick={exportImage}
-            className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 mt-4 text-sm sm:text-base"
-          >
-            Export Final Image
-          </button>
-        )}
       </div>
     </div>
   )
