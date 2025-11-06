@@ -10,6 +10,7 @@ const Page = () => {
   const [textColor, setTextColor] = useState<string>('#000000')
   const [isBold, setIsBold] = useState<boolean>(false)
   const [fontSize, setFontSize] = useState<string>('20px')
+  const [selectedResolution, setSelectedResolution] = useState<number>(360)  
 
   const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -61,6 +62,15 @@ const Page = () => {
     { label: 'XXXL', value: '36px' },
   ]
 
+
+  const resolutions = [
+    {label: "Normal", width: 360},
+    {label: "Long", width: 420}
+  ]
+
+  console.log(selectedResolution);
+  
+
   return (
     <div className="md:max-h-screen flex flex-col md:flex-row overflow-hidden">
       {/* Left Panel - Frames */}
@@ -85,7 +95,7 @@ const Page = () => {
       <div className="w-full md:w-[40%] flex items-center justify-center p-4 ">
         <div
           id="preview"
-          className="relative w-[90vw] max-w-[360px] aspect-[4/5]"
+          className={`relative w-[${selectedResolution}px] aspect-[4/5]`}
         >
           {uploadedImg ? (
             <>
@@ -189,6 +199,19 @@ const Page = () => {
                 ))}
               </div>
             </div>
+          </div>
+
+          <div className='flex gap-4 items-center'>
+            {
+              resolutions.map((resolution, i) => (
+                <button
+                className={`px-4 py-1 bg-lime-500 rounded-md shadow-sm hover:opacity-80 cursor-pointer transition-all duration-300 text-sm ${selectedResolution === resolution.width && 'ring ring-red-300'}`}
+                onClick={() => setSelectedResolution(resolution.width)}
+                key={i}>{
+                  selectedResolution === resolution.width  ? `${resolution.label + " ✓"}` : `${resolution.label}`
+                }</button>
+              ))
+            }
           </div>
 
           {/* Font Controls */}
