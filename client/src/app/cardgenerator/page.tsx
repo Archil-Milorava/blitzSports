@@ -2,6 +2,17 @@
 import React, { useState } from 'react'
 import NextImage from 'next/image'
 import html2canvas from 'html2canvas'
+import localFont from 'next/font/local'
+
+
+const mtavruli = localFont({
+  src: [
+    {path: "../../../public/fonts/nino_mtavruli_normal.ttf", weight: "400",  style: "normal",},
+    {path: "../../../public/fonts/nino_mtavruli_bold.otf", weight: "700", style:"normal"}
+  ],
+variable: '--mtavruli',
+display: "swap"
+})
 
 const Page = () => {
   const [uploadedImg, setUploadedImg] = useState<string | null>(null)
@@ -95,7 +106,7 @@ const Page = () => {
       <div className="w-full md:w-[40%] flex items-center justify-center p-4 ">
         <div
           id="preview"
-          className={`relative aspect-[4/5]`}
+          className={`relative aspect-[4/5] ${mtavruli.className}`}
           style={{width: `${selectedResolution}px`}}
         >
           {uploadedImg ? (
