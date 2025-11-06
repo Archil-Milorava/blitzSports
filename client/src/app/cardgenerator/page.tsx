@@ -95,7 +95,8 @@ const Page = () => {
       <div className="w-full md:w-[40%] flex items-center justify-center p-4 ">
         <div
           id="preview"
-          className={`relative w-[${selectedResolution}px] aspect-[4/5]`}
+          className={`relative aspect-[4/5]`}
+          style={{width: `${selectedResolution}px`}}
         >
           {uploadedImg ? (
             <>
@@ -119,7 +120,7 @@ const Page = () => {
 
               {caption && (
                 <p
-                  className="absolute w-full bottom-5 text-center px-2 z-10 break-words"
+                  className="absolute w-full bottom-7 text-center px-2 z-10 break-words"
                   style={{
                     color: textColor,
                     fontWeight: isBold ? 'bold' : 'normal',
