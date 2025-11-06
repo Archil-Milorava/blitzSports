@@ -6,7 +6,7 @@ import Pagination from "@/components/Pagination";
 import { getApiBaseUrl } from "@/utils/getBaseUrl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { NewsItem } from "../../../types/Article.types";
+import { NewsItem } from "../../types/Article.types";
 
 const baseUrl = getApiBaseUrl();
 

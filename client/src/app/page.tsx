@@ -9,7 +9,7 @@ import MmaBanner from "@/components/MmaBanner";
 import NewsCard from "@/components/NewsCard";
 import QASection from "@/features/landing/QASection";
 import { getApiBaseUrl } from "@/utils/getBaseUrl";
-import { HistoryItem, NewsItem } from "../../types/Article.types";
+import { HistoryItem, NewsItem } from "../types/Article.types";
 
 const getFontGeo = localFont({
   src: "../../public/fonts/font_geo.ttf",

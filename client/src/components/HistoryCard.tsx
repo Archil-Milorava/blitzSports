@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { HistoryItem } from "../../types/Article.types";
+import { HistoryItem } from "../types/Article.types";
 import getPlainTextExcerpt from "@/utils/getPlainTextExcerpt";
 import ImageMain from "./ImageMain";
 

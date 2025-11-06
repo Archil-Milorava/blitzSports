@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { NewsItem } from "../../types/Article.types";
+import { NewsItem } from "../types/Article.types";
 
 interface NewsCardProps {
   news: NewsItem;
